@@ -6,5 +6,13 @@
   "appName": "Interactify",
   "@appName": {
     "description": "The name of the application"
+  },
+  "appTest": "'You have pushed the button this many times:',",
+  "@appTest": {
+    "description": "Text button"
+  },
+  "appFull": "full",
+  "@appFull": {
+    "description": "full"
   }
 }
