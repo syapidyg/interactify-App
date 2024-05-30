@@ -1,0 +1,11 @@
+{
+    "appTitle": "flutter_skeleton_1",
+    "@appTitle": {
+      "description": "Le titre de l'application"
+    },
+    "appName": "Mon app",
+    "@appName": {
+      "description": "Le nom de l'application"
+    }
+  }
+  
