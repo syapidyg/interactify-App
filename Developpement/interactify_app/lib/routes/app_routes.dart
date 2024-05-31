@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:interactify_app/Pages/my_home_page.dart';
 import 'package:interactify_app/widgets/nav_bar.dart';
 
 class AppRoutes {
