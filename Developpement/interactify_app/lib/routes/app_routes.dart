@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:interactify_app/Pages/my_home_page.dart';
+import 'package:interactify_app/widgets/nav_bar.dart';
 
 class AppRoutes {
-  static Route<dynamic> generateRoute(
-      {required RouteSettings routeSettings,
-      required bool isDarkMode,
-      required void Function(bool) toggleTheme}) {
+  static Route<dynamic> generateRoute({
+    required RouteSettings routeSettings,
+  }) {
     switch (routeSettings.name) {
       // case "AppTest.routeName":
       //   return MaterialPageRoute<void>(
@@ -15,8 +15,7 @@ class AppRoutes {
       default:
         return MaterialPageRoute<void>(
           settings: routeSettings,
-          builder: (BuildContext context) =>
-               MyHomePage(title: "Interactify", toggleTheme: toggleTheme, isDarkMode: isDarkMode, ),
+          builder: (BuildContext context) => NavBar(),
         );
     }
   }

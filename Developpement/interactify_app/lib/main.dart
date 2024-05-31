@@ -16,11 +16,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool _isDarkMode = false;
 
-  void _toggleTheme(bool isDarkMode) {
-    setState(() {
-      _isDarkMode = isDarkMode;
-    });
-  }
+  // void _toggleTheme(bool isDarkMode) {
+  //   setState(() {
+  //     _isDarkMode = isDarkMode;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +42,8 @@ class _MyAppState extends State<MyApp> {
       //       toggleTheme: _toggleTheme),
       // );
       onGenerateRoute: (settings) => AppRoutes.generateRoute(
-          routeSettings: settings,
-          isDarkMode: _isDarkMode,
-          toggleTheme: _toggleTheme),
+          routeSettings: settings
+          ),
     );
   }
 }
