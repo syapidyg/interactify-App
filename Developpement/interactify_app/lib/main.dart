@@ -3,11 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:interactify_app/routes/app_routes.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Flutter Demo',
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: Locale("fr"),
+      locale: Locale("en"),
       theme: ThemeData(
         brightness: Brightness.light,
       ),
@@ -41,9 +41,11 @@ class _MyAppState extends State<MyApp> {
       //       isDarkMode: _isDarkMode,
       //       toggleTheme: _toggleTheme),
       // );
-      onGenerateRoute: (settings) => AppRoutes.generateRoute(
-          routeSettings: settings
-          ),
+      onGenerateRoute: (settings) => AppRoutes().generateRoute(
+        routeSettings: settings,
+        // isDarkMode: _isDarkMode,
+        // toggleTheme: _toggleTheme,
+      ),
     );
   }
 }
