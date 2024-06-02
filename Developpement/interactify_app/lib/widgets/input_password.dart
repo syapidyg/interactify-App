@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class InputText extends StatefulWidget {
+class InputPassword extends StatefulWidget {
   final String hintText;
 
-  const InputText({super.key, required this.hintText});
+  const InputPassword({super.key, required this.hintText});
 
   @override
-  State<InputText> createState() => _InputTextState();
+  State<InputPassword> createState() => _InputPasswordState();
 }
 
-class _InputTextState extends State<InputText> {
+class _InputPasswordState extends State<InputPassword> {
   bool _isObscured = true;
 
   @override
@@ -27,8 +27,19 @@ class _InputTextState extends State<InputText> {
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
               borderSide: BorderSide(
                 color: Colors.grey,
-                width: 0.3,
+                width: 0.1,
               )),
+          suffixIcon: IconButton(
+            icon: Icon(
+              _isObscured ? Icons.visibility_off : Icons.visibility,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              setState(() {
+                _isObscured = !_isObscured;
+              });
+            },
+          ),
         ));
   }
 }

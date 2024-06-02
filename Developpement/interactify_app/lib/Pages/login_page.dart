@@ -5,10 +5,10 @@ import 'package:interactify_app/widgets/button_black.dart';
 import 'package:interactify_app/widgets/input_password.dart';
 import 'package:interactify_app/widgets/input_text.dart';
 
-class RegisterPage extends StatelessWidget {
-  static const routeName = "/register";
+class LoginPage extends StatelessWidget {
+  static const routeName = "/login";
 
-  const RegisterPage({super.key});
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,30 +46,21 @@ class RegisterPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(
-                'Hello! Register to get started',
+                "Welcome back! Glad to see you, Again!",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               InputText(
-                hintText: "Username",
-              ),
-              InputText(
                 hintText: "Email",
-              ),
-              InputText(
-                hintText: "Promotion ",
               ),
               InputPassword(
                 hintText: "Password",
               ),
-              InputPassword(
-                hintText: "Confirm Password",
-              ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: ButtonBlack(texte: "Register", routeName: routeName),
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: ButtonBlack(texte: "Login", routeName: routeName),
               ),
               Row(
                 children: [
@@ -80,7 +71,7 @@ class RegisterPage extends StatelessWidget {
                   )),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text("Or Register with",
+                    child: Text("Or Login with",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF051C24))),
@@ -92,32 +83,35 @@ class RegisterPage extends StatelessWidget {
                   )),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      // Handle Google register button press
-                    },
-                    style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    OutlinedButton(
+                      onPressed: () {
+                        // Handle Google register button press
+                      },
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        side: BorderSide(
+                          color: Colors.grey,
+                          width: 1,
+                        ),
                       ),
-                      side: BorderSide(
-                        color: Colors.grey,
-                        width: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 18.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [FaIcon(FontAwesomeIcons.google)],
+                        ),
                       ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 18.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [FaIcon(FontAwesomeIcons.google)],
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -125,14 +119,14 @@ class RegisterPage extends StatelessWidget {
                   Expanded(
                     child: RichText(
                       text: TextSpan(
-                        text: 'Already have an account? ',
+                        text:"Don’t have an account? " ,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
                         ),
                         children: [
                           TextSpan(
-                            text: 'Login Now',
+                            text: "Register Now",
                             style: TextStyle(
                               color: Colors.blue,
                               fontSize: 16,

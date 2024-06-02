@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interactify_app/Pages/login_page.dart';
 import 'package:interactify_app/Pages/login_register_page.dart';
 import 'package:interactify_app/Pages/on_boarding_page.dart';
 import 'package:interactify_app/Pages/register_page.dart';
@@ -22,6 +23,11 @@ class AppRoutes {
         return MaterialPageRoute<void>(
           settings: routeSettings,
           builder: (BuildContext context) => RegisterPage(),
+        );
+      case LoginPage.routeName:
+        return MaterialPageRoute<void>(
+          settings: routeSettings,
+          builder: (BuildContext context) => LoginPage(),
         );
       default:
         return MaterialPageRoute<void>(

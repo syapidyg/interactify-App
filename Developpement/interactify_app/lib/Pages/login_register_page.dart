@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interactify_app/Pages/login_page.dart';
 import 'package:interactify_app/Pages/register_page.dart';
 import 'package:interactify_app/widgets/Button_black_border.dart';
 import 'package:interactify_app/widgets/button_black.dart';
@@ -9,10 +10,11 @@ class LoginRegisterPage extends StatelessWidget {
   LoginRegisterPage({super.key});
 
   String registerRouteName = RegisterPage.routeName;
+  String loginRouteName = LoginPage.routeName;
 
   @override
   Widget build(BuildContext context) {
-    double imageWidth = MediaQuery.of(context).size.width * 0.6;
+    double imageWidth = MediaQuery.of(context).size.width * 0.5;
     double imageHeight = MediaQuery.of(context).size.height * 0.5;
     String imagePath = "assets/images/celfirst.png";
     String imageInteractify = "assets/images/logo.jpg";
@@ -21,7 +23,7 @@ class LoginRegisterPage extends StatelessWidget {
       height: double.infinity,
       width: double.infinity,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 30),
+        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 28),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -33,7 +35,7 @@ class LoginRegisterPage extends StatelessWidget {
             ),
             ButtonBlack(
               texte: "Login",
-              routeName: registerRouteName,
+              routeName: loginRouteName,
             ),
             ButtonBlackBorder(
               texte: "Register",

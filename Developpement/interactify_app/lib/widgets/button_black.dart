@@ -8,19 +8,29 @@ class ButtonBlack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFF051C24),
-            side: BorderSide(color: Color(0xFF051C24), width: 1),
-            fixedSize: Size(330, 50),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+    return Container(
+      width: double.infinity,
+      height: 55,
+      child: TextButton(
         onPressed: () {
           Navigator.pushNamed(context, routeName);
         },
+        style: TextButton.styleFrom(
+          backgroundColor: Color(0xFF051C24), // Button background color
+          padding: EdgeInsets.symmetric(vertical: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            side: BorderSide(color: Color(0xFF051C24), width: 1),
+          ),
+        ),
         child: Text(
           texte,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
-        ));
+          style: TextStyle(
+            color: Colors.white, // Button text color
+            fontSize: 20,
+          ),
+        ),
+      ),
+    );
   }
 }
