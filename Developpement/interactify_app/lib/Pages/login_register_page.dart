@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:interactify_app/Pages/register_page.dart';
 import 'package:interactify_app/widgets/Button_black_border.dart';
 import 'package:interactify_app/widgets/button_black.dart';
 
-class LoginPage extends StatelessWidget {
-  static const routeName = "/Login";
+class LoginRegisterPage extends StatelessWidget {
+  static const routeName = "/loginRegister";
 
-  LoginPage({super.key});
+  LoginRegisterPage({super.key});
+
+  String registerRouteName = RegisterPage.routeName;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +31,13 @@ class LoginPage extends StatelessWidget {
               imagePath,
               fit: BoxFit.fill,
             ),
-            ButtonBlack(texte: "Login"),
+            ButtonBlack(
+              texte: "Login",
+              routeName: registerRouteName,
+            ),
             ButtonBlackBorder(
               texte: "Register",
+              routeName: registerRouteName,
             ),
             Container(
               child: Text("Continue as a guest"),

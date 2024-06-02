@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:interactify_app/Pages/login_page.dart';
+import 'package:interactify_app/Pages/login_register_page.dart';
 import 'package:interactify_app/models/on_boarding.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -56,7 +56,7 @@ class OnBoardCard extends StatelessWidget {
             fixedSize: Size(330, 50),
             shape: CircleBorder(side: BorderSide.none)),
             onPressed: () {
-              Navigator.pushNamed(context, LoginPage.routeName);
+              Navigator.pushNamed(context, LoginRegisterPage.routeName);
             },
             child: onBoarding.pageController.hasClients
                 // ? onBoarding.pageController.page == 2

@@ -4,7 +4,7 @@ import 'package:interactify_app/widgets/on_board_card.dart';
 
 class OnBoardingPage extends StatelessWidget {
   static final PageController _pageController = PageController(initialPage: 0);
-  static final routeName = "/OnBoardingPage";
+  static const routeName = "/onBoardingPage";
 
   static final OnBoarding onBoarding_page1 = OnBoarding(
       title: "help you share best videos with everyone.",

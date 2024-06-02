@@ -1,28 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:interactify_app/Pages/login_page.dart';
+import 'package:interactify_app/Pages/login_register_page.dart';
 import 'package:interactify_app/Pages/on_boarding_page.dart';
+import 'package:interactify_app/Pages/register_page.dart';
 
 class AppRoutes {
   Route<dynamic> generateRoute({
     required RouteSettings routeSettings,
   }) {
     switch (routeSettings.name) {
-      case "OnBoardingPage.routeName":
+      case OnBoardingPage.routeName:
         return MaterialPageRoute<void>(
           settings: routeSettings,
           builder: (BuildContext context) => OnBoardingPage(),
         );
-      case "LoginPage.routeName":
+      case LoginRegisterPage.routeName:
         return MaterialPageRoute<void>(
           settings: routeSettings,
-          builder: (BuildContext context) => LoginPage(),
+          builder: (BuildContext context) => LoginRegisterPage(),
+        );
+      case RegisterPage.routeName:
+        return MaterialPageRoute<void>(
+          settings: routeSettings,
+          builder: (BuildContext context) => RegisterPage(),
         );
       default:
         return MaterialPageRoute<void>(
             settings: routeSettings,
             builder: (BuildContext context) =>
                 // OnBoardCard(onBoarding: onBoarding),
-                LoginPage());
+                OnBoardingPage());
     }
   }
 }

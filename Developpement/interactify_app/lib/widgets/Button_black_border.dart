@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ButtonBlackBorder extends StatelessWidget {
-  const ButtonBlackBorder({super.key, required this.texte});
+  const ButtonBlackBorder({super.key, required this.texte, required this.routeName});
 
   final String texte;
+  final String routeName;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,9 @@ class ButtonBlackBorder extends StatelessWidget {
             fixedSize: Size(330, 50),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, routeName);
+        },
         child: Text(
           texte,
           style:
