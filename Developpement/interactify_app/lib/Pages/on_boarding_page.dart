@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:interactify_app/models/on_boarding.dart';
 import 'package:interactify_app/widgets/on_board_card.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingPage extends StatelessWidget {
   static final PageController _pageController = PageController(initialPage: 0);

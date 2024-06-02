@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:interactify_app/routes/app_routes.dart';
 
 void main() {
@@ -31,6 +32,7 @@ class _MyAppState extends State<MyApp> {
       locale: Locale("en"),
       theme: ThemeData(
         brightness: Brightness.light,
+        textTheme: GoogleFonts.urbanistTextTheme(),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
