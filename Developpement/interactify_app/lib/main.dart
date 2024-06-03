@@ -1,21 +1,24 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:interactify_app/Pages/publications.dart';
 import 'package:interactify_app/routes/app_routes.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const interactify());
 }
 
-class MyApp extends StatefulWidget {
-  MyApp({super.key});
+class interactify extends StatefulWidget {
+  const interactify({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<interactify> createState() => _interactifyState();
 }
 
-class _MyAppState extends State<MyApp> {
-  bool _isDarkMode = false;
+class _interactifyState extends State<interactify> {
+  final bool _isDarkMode = false;
 
   // void _toggleTheme(bool isDarkMode) {
   //   setState(() {
@@ -29,7 +32,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Flutter Demo',
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: Locale("en"),
+      locale: const Locale("en"),
       theme: ThemeData(
         brightness: Brightness.light,
         textTheme: GoogleFonts.urbanistTextTheme(),

@@ -15,18 +15,19 @@ class Head extends StatelessWidget implements PreferredSizeWidget {
         'Interactify',
         style: TextStyle(
           fontFamily: 'Yesteryear',
-          color: Colors.black,
+          color: Color.fromARGB(255, 240, 224, 224),
+          fontSize: 30
         ),
       ),
       actions: <Widget>[
         IconButton(
-          icon:  const Icon(Icons.message),
+          icon:   Image.asset('assets/images/messenger.png'),
           onPressed: () {
             Navigator.pushNamed(context, '/messages');
           },
         ),
       ],
-      backgroundColor: Color(0xFF2EA3F8),
+      backgroundColor: Color.fromARGB(13, 46, 163, 248),
     );
   
   }

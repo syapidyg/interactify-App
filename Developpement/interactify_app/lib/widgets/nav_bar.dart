@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({super.key});
-
   @override
   _NavBarState createState() => _NavBarState();
 }
@@ -55,7 +53,7 @@ class _NavBarState extends State<NavBar> {
         ),
         BottomNavigationBarItem(
           icon: CircleAvatar(
-            backgroundImage: AssetImage("assets/images/v6.jpg"),
+            backgroundImage: AssetImage("assets/images/v6.jpeg"),
           ),
           label: ('Profil'),
         ),
