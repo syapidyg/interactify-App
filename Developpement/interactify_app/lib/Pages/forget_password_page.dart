@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:interactify_app/Pages/create_new_password_page.dart';
 import 'package:interactify_app/Pages/login_page.dart';
 import 'package:interactify_app/Pages/login_register_page.dart';
 import 'package:interactify_app/widgets/button_black.dart';
@@ -60,6 +61,7 @@ class ForgetPasswordPage extends StatelessWidget {
                       "Don't worry! It occurs. Please enter the email address linked with your account.",
                       style: TextStyle(
                         fontSize: 16,
+                        color: Colors.grey,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -85,7 +87,8 @@ class ForgetPasswordPage extends StatelessWidget {
                                 child: ButtonBlack(
                                   texte: "Send Code",
                                   onPressed: () {
-                                    Navigator.pushNamed(context, routeName);
+                                    Navigator.pushNamed(context,
+                                        CreateNewPasswordPage.routeName);
                                   },
                                 )),
                           ],
@@ -119,7 +122,8 @@ class ForgetPasswordPage extends StatelessWidget {
                                 ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Navigator.pushNamed(context, LoginPage.routeName);
+                                    Navigator.pushNamed(
+                                        context, LoginPage.routeName);
                                   },
                               ),
                             ],

@@ -11,7 +11,6 @@ class InputText extends StatefulWidget {
 }
 
 class _InputTextState extends State<InputText> {
-  bool _isObscured = true;
 
   @override
   Widget build(BuildContext context) {
