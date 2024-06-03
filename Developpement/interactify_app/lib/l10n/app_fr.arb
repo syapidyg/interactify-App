@@ -1,0 +1,18 @@
+{
+  "appTitle": "Interactify_Application",
+  "@appTitle": {
+    "description": "Le titre de l'application"
+  },
+  "appName": "Interactify_Application",
+  "@appName": {
+    "description": "Le nom de l'application"
+  },
+  "appTest": "'Appuyez sur le boutton:',",
+  "@appTest": {
+    "description": "boutton texte"
+  },
+  "appFull": "full",
+  "@appFull": {
+    "description": "full"
+  }
+}
