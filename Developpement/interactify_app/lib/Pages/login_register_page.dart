@@ -14,7 +14,7 @@ class LoginRegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double imageWidth = MediaQuery.of(context).size.width * 0.5;
+    double imageWidth = MediaQuery.of(context).size.width * 0.6;
     double imageHeight = MediaQuery.of(context).size.height * 0.5;
     String imagePath = "assets/images/celfirst.png";
     String imageInteractify = "assets/images/logo.jpg";
@@ -33,13 +33,19 @@ class LoginRegisterPage extends StatelessWidget {
               imagePath,
               fit: BoxFit.fill,
             ),
-            ButtonBlack(
-              texte: "Login",
-              routeName: loginRouteName,
+            Container(
+              height: 57,
+              child: ButtonBlack(
+                texte: "Login",
+                routeName: loginRouteName,
+              ),
             ),
-            ButtonBlackBorder(
-              texte: "Register",
-              routeName: registerRouteName,
+            Container(
+              height: 57,
+              child: ButtonBlackBorder(
+                texte: "Register",
+                routeName: registerRouteName,
+              ),
             ),
             Container(
               child: Text("Continue as a guest"),

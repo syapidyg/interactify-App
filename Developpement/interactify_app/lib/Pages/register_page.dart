@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:interactify_app/Pages/login_register_page.dart';
 import 'package:interactify_app/widgets/button_black.dart';
 import 'package:interactify_app/widgets/input_password.dart';
 import 'package:interactify_app/widgets/input_text.dart';
@@ -32,7 +33,7 @@ class RegisterPage extends StatelessWidget {
                 color: Color(0xFF051C24),
               ),
               onPressed: () {
-                // Handle back button press
+                Navigator.pushNamed(context, LoginRegisterPage.routeName);
               },
             ),
           ),

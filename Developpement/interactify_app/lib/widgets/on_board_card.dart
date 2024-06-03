@@ -52,9 +52,9 @@ class OnBoardCard extends StatelessWidget {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFF2EA3F8),
-            fixedSize: Size(330, 50),
-            shape: CircleBorder(side: BorderSide.none)),
+                backgroundColor: Color(0xFF2EA3F8),
+                fixedSize: Size(330, 50),
+                shape: CircleBorder(side: BorderSide.none)),
             onPressed: () {
               Navigator.pushNamed(context, LoginRegisterPage.routeName);
             },
@@ -65,12 +65,12 @@ class OnBoardCard extends StatelessWidget {
                 //         FontAwesomeIcons.arrowRight,
                 //         color: Colors.white,
                 //       )
-                ? FaIcon(
-                    FontAwesomeIcons.arrowRight,
+                ? Icon(
+                    Icons.double_arrow_rounded,
                     color: Colors.white,
                   )
-                : FaIcon(
-                    FontAwesomeIcons.arrowRight,
+                : Icon(
+                    Icons.double_arrow_rounded,
                     color: Colors.white,
                   ),
           )
