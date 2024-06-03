@@ -16,7 +16,6 @@ class _InputTextState extends State<InputText> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-        obscureText: _isObscured,
         cursorColor: Color(0xFF2EA3F8),
         decoration: InputDecoration(
           filled: true,

@@ -1,6 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:interactify_app/Pages/forget_password.dart';
+import 'package:interactify_app/Pages/login_register_page.dart';
+import 'package:interactify_app/Pages/register_page.dart';
 import 'package:interactify_app/widgets/button_black.dart';
 import 'package:interactify_app/widgets/input_password.dart';
 import 'package:interactify_app/widgets/input_text.dart';
@@ -32,7 +36,7 @@ class LoginPage extends StatelessWidget {
                 color: Color(0xFF051C24),
               ),
               onPressed: () {
-                // Handle back button press
+                Navigator.pushNamed(context, LoginRegisterPage.routeName);
               },
             ),
           ),
@@ -43,7 +47,7 @@ class LoginPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
                 "Welcome back! Glad to see you, Again!",
@@ -52,62 +56,102 @@ class LoginPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              InputText(
-                hintText: "Email",
-              ),
-              InputPassword(
-                hintText: "Password",
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: ButtonBlack(texte: "Login", routeName: routeName),
-              ),
-              Row(
+              Column(
                 children: [
-                  Expanded(
-                      child: Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  )),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text("Or Login with",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF051C24))),
+                    padding: const EdgeInsets.symmetric(vertical: 30),
+                    child: InputText(
+                      hintText: "Enter your Email",
+                    ),
                   ),
-                  Expanded(
-                      child: Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  )),
+                  InputPassword(
+                    hintText: "Enter your Password",
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          text: "Forget Password?",
+                          style: TextStyle(
+                            color: Color(0xFF051C24),
+                            fontWeight: FontWeight.w600,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushNamed(
+                                  context, ForgetPasswordPage.routeName);
+                            },
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.all(25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Column(
                   children: [
-                    OutlinedButton(
-                      onPressed: () {
-                        // Handle Google register button press
-                      },
-                      style: OutlinedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        side: BorderSide(
-                          color: Colors.grey,
-                          width: 1,
-                        ),
+                    Container(
+                        height: 55,
+                        child: ButtonBlack(
+                          texte: "Login",
+                          onPressed: () {
+                            Navigator.pushNamed(context, routeName);
+                          },
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: Divider(
+                            color: Colors.grey,
+                            thickness: 1,
+                          )),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Text("Or Login with",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF051C24))),
+                          ),
+                          Expanded(
+                              child: Divider(
+                            color: Colors.grey,
+                            thickness: 1,
+                          )),
+                        ],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 18.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [FaIcon(FontAwesomeIcons.google)],
-                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          OutlinedButton(
+                            onPressed: () {
+                              // Handle Google register button press
+                            },
+                            style: OutlinedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              side: BorderSide(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 18.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [FaIcon(FontAwesomeIcons.google)],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -116,29 +160,28 @@ class LoginPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: RichText(
-                      text: TextSpan(
-                        text:"Don’t have an account? " ,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: "Register Now",
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                // Handle login now press
-                              },
-                          ),
-                        ],
+                  RichText(
+                    text: TextSpan(
+                      text: "Don’t have an account? ",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
                       ),
+                      children: [
+                        TextSpan(
+                          text: "Register Now",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushNamed(
+                                  context, RegisterPage.routeName);
+                            },
+                        ),
+                      ],
                     ),
                   ),
                 ],

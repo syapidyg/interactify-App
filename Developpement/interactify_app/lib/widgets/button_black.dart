@@ -1,19 +1,19 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 class ButtonBlack extends StatelessWidget {
-  const ButtonBlack({super.key, required this.texte, required this.routeName});
+  const ButtonBlack({super.key, required this.texte, required this.onPressed});
 
   final String texte;
-  final String routeName;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       child: TextButton(
-        onPressed: () {
-          Navigator.pushNamed(context, routeName);
-        },
+        onPressed: onPressed,
         style: TextButton.styleFrom(
           backgroundColor: Color(0xFF051C24), // Button background color
           padding: EdgeInsets.symmetric(vertical: 16),
@@ -26,6 +26,7 @@ class ButtonBlack extends StatelessWidget {
           texte,
           style: TextStyle(
             color: Colors.white, // Button text color
+            fontWeight: FontWeight.w600,
             fontSize: 20,
           ),
         ),

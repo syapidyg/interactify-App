@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:interactify_app/Pages/login_page.dart';
 import 'package:interactify_app/Pages/login_register_page.dart';
 import 'package:interactify_app/widgets/button_black.dart';
 import 'package:interactify_app/widgets/input_password.dart';
@@ -70,7 +71,12 @@ class RegisterPage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child: ButtonBlack(texte: "Register", routeName: routeName),
+                child: ButtonBlack(
+                  texte: "Register",
+                  onPressed: () {
+                    Navigator.pushNamed(context, routeName);
+                  },
+                ),
               ),
               Row(
                 children: [
@@ -123,29 +129,27 @@ class RegisterPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Already have an account? ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Login Now',
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                // Handle login now press
-                              },
-                          ),
-                        ],
+                  RichText(
+                    text: TextSpan(
+                      text: 'Already have an account? ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
                       ),
+                      children: [
+                        TextSpan(
+                          text: 'Login Now',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushNamed(context, LoginPage.routeName);
+                            },
+                        ),
+                      ],
                     ),
                   ),
                 ],

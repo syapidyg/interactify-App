@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 
 class ButtonBlackBorder extends StatelessWidget {
   const ButtonBlackBorder(
-      {super.key, required this.texte, required this.routeName});
+      {super.key, required this.texte, required this.onPressed});
 
   final String texte;
-  final String routeName;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       child: TextButton(
-        onPressed: () {
-          Navigator.pushNamed(context, routeName);
-        },
+        onPressed: onPressed,
         style: TextButton.styleFrom(
           backgroundColor: Colors.white, // Button background color
           padding: EdgeInsets.symmetric(vertical: 16),
@@ -27,6 +25,7 @@ class ButtonBlackBorder extends StatelessWidget {
           texte,
           style: TextStyle(
             color: Color(0xFF051C24), // Button text color
+            fontWeight: FontWeight.w600,
             fontSize: 20,
           ),
         ),
@@ -34,4 +33,3 @@ class ButtonBlackBorder extends StatelessWidget {
     );
   }
 }
-

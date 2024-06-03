@@ -37,14 +37,18 @@ class LoginRegisterPage extends StatelessWidget {
               height: 57,
               child: ButtonBlack(
                 texte: "Login",
-                routeName: loginRouteName,
+                onPressed: () {
+                  Navigator.pushNamed(context, loginRouteName);
+                },
               ),
             ),
             Container(
               height: 57,
               child: ButtonBlackBorder(
                 texte: "Register",
-                routeName: registerRouteName,
+                onPressed: () {
+                  Navigator.pushNamed(context, registerRouteName);
+                },
               ),
             ),
             Container(
