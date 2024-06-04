@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:interactify_app/widgets/annonceCard.dart';
 import 'package:interactify_app/widgets/head.dart';
 import 'package:interactify_app/widgets/nav_bar.dart';
+import 'package:interactify_app/widgets/navigators.dart';
 
 
 
@@ -53,7 +54,7 @@ class _HomePageState extends State<Annonces> {
       );
       annonces.add(
          const AnnonceCard(
-              photoProfil: 'assets/images/logo.png',
+              photoProfil: 'assets/images/logo.jpg',
               username: 'Axcel TCHIFFO',
               datePublication: 'Jun 3, 2024',
               description: 'This is my first post.', 
@@ -70,14 +71,17 @@ class _HomePageState extends State<Annonces> {
       ),
       );
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: const Head(),
-      body: Container(
-        color: Colors.white,
-        child: ListView(
+      body:  ListView(
           padding: const EdgeInsets.only(top: 10, bottom: 10),
-          children: annonces,
+          children: [
+            const SizedBox(height: 10),
+            const Navigators(number: 1),
+            const SizedBox(height: 10),
+            ...annonces,
+            ]
         ),
-      ),
       bottomNavigationBar: NavBar(),
       );
   }
