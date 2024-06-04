@@ -53,7 +53,7 @@ class _NavBarState extends State<NavBar> {
         ),
         BottomNavigationBarItem(
           icon: CircleAvatar(
-            backgroundImage: AssetImage("assets/images/v6.jpeg"),
+            backgroundImage: AssetImage("assets/images/v6.jpg"),
           ),
           label: ('Profil'),
         ),

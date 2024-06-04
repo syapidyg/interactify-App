@@ -1,10 +1,10 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:interactify_app/models/publication.dart';
+import 'package:interactify_app/models/utilisateur.dart';
 import 'package:interactify_app/widgets/head.dart';
 import 'package:interactify_app/widgets/nav_bar.dart';
 import 'package:interactify_app/widgets/publication_card.dart';
-
-
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,6 +14,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List<PublicationCard> publications = [];
 
+  Utilisateur utilisateur1 = Utilisateur(
+      photoProfil: "assets/images/marx.png",
+      promotion: "X2025",
+      username: "SyapiDYG");
+
+  late Publication publication1;
 
   /*@override
   void initState() {
@@ -44,49 +50,24 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    publications.add(
-        const PublicationCard(
-              photoProfil: 'assets/images/marx.png',
-              username: 'John Doe',
-              promotion: 'X2024',
-              datePublication: 'Jan 1, 2023',
-              description: 'This is a test publication.',
-              image: 'assets/images/marx.png',
-              likes: 10,
-              commentaires: 5,
-      ),
-      );
-      publications.add(
-        const PublicationCard(
-              photoProfil: 'assets/images/logo.png',
-              username: 'Axcel TCHIFFO',
-              promotion: 'X2025',
-              datePublication: 'Jun 3, 2024',
-              description: 'This is my first post.',
-              image: 'assets/images/logo.png',
-              likes: 150,
-              commentaires: 15,
-      ),
-      );
-      publications.add(
-        const PublicationCard(
-              photoProfil: 'assets/images/v7.jpg',
-              username: 'Sopho PICHICHI',
-              promotion: 'X2025',
-              datePublication: 'Jun 3, 2024',
-              description: 'This is my first post.',
-              image: 'assets/images/v7.jpg',
-              likes: 1500,
-              commentaires: 60,
-      ),
-      );
+    publication1 = Publication(
+        datePublication: "2015-12-4",
+        description: "yyyyyyyyyy hhhhhhhhhhhhhhh hhhhhhhhhhhhhh ddddddddddddd vvvvvvvvvvvvvvvv bbbbbbbbbbbbbbb nnnnnnnnnnnnnnnn ggggggggggggggggggg ooooooooooooooooooooooo",
+        image: "assets/images/Rectangle 4750.png",
+        commentaires: null,
+        likes: null,
+        utilisateur: utilisateur1);
+
+    PublicationCard card = PublicationCard(publication: publication1);
+    publications.add(card);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: const Head(),
       body: ListView(
         padding: const EdgeInsets.only(top: 10, bottom: 10),
         children: publications,
       ),
       bottomNavigationBar: NavBar(),
-      );
+    );
   }
 }
