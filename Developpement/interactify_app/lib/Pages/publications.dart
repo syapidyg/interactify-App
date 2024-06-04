@@ -7,6 +7,9 @@ import 'package:interactify_app/widgets/nav_bar.dart';
 import 'package:interactify_app/widgets/publication_card.dart';
 
 class HomePage extends StatefulWidget {
+
+    static const routeName = "/home";
+
   @override
   _HomePageState createState() => _HomePageState();
 }

@@ -47,7 +47,13 @@ class AppRoutes {
         return MaterialPageRoute<void>(
           settings: routeSettings,
           builder: (BuildContext context) => PasswordConfirmPage(),
-        );case PasswordConfirmPage.routeName:
+        );
+      case PasswordConfirmPage.routeName:
+        return MaterialPageRoute<void>(
+          settings: routeSettings,
+          builder: (BuildContext context) => PasswordConfirmPage(),
+        );
+      case HomePage.routeName:
         return MaterialPageRoute<void>(
           settings: routeSettings,
           builder: (BuildContext context) => PasswordConfirmPage(),
