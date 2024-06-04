@@ -72,6 +72,7 @@ class _HomePageState extends State<Annonces> {
     return Scaffold(
       appBar: const Head(),
       body: Container(
+        color: Colors.white,
         child: ListView(
           padding: const EdgeInsets.only(top: 10, bottom: 10),
           children: annonces,
