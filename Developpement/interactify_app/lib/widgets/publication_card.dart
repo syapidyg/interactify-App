@@ -1,25 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:interactify_app/models/commentaire.dart';
+import 'package:interactify_app/models/like.dart';
+import 'package:interactify_app/models/publication.dart';
 
 class PublicationCard extends StatefulWidget {
-  final String photoProfil;
-  final String username;
-  final String promotion;
-  final String datePublication;
-  final String description;
-  final String? image;
-  final int likes;
-  final int commentaires;
+  Publication publication;
 
-  const PublicationCard({
-    required this.photoProfil,
-    required this.username,
-    required this.datePublication,
-    required this.description,
-    this.image,
-    required this.likes,
-    required this.commentaires,
-    required this.promotion,
+  PublicationCard({
+    super.key,
+    required this.publication,
   });
 
   @override
@@ -42,15 +32,10 @@ class _PublicationCardState extends State<PublicationCard> {
     return Container(
       margin: EdgeInsets.only(
           bottom: screenWidth * 0.016,
-          left: screenWidth* 0.01,
-          right: screenWidth* 0.01
-        ),
-      decoration: BoxDecoration(
-      border: Border.all(
-           width: 1,
-           color: Colors.grey
-        )
-     ),
+          left: screenWidth * 0.01,
+          right: screenWidth * 0.01),
+      decoration:
+          BoxDecoration(border: Border.all(width: 1, color: Colors.grey)),
       child: Card(
         surfaceTintColor: Colors.white,
         shadowColor: Colors.white,
@@ -63,7 +48,8 @@ class _PublicationCardState extends State<PublicationCard> {
               child: Row(
                 children: <Widget>[
                   CircleAvatar(
-                    backgroundImage: AssetImage(widget.photoProfil),
+                    backgroundImage:
+                        AssetImage(widget.publication.utilisateur.photoProfil),
                     radius: 30,
                   ),
                   const SizedBox(width: 8.0),
@@ -74,7 +60,7 @@ class _PublicationCardState extends State<PublicationCard> {
                         Padding(
                           padding: const EdgeInsets.only(top: 2),
                           child: Text(
-                            widget.username,
+                            widget.publication.utilisateur.username,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -82,7 +68,7 @@ class _PublicationCardState extends State<PublicationCard> {
                         Padding(
                           padding: const EdgeInsets.only(left: 1, top: 5),
                           child: Text(
-                            widget.promotion,
+                            widget.publication.utilisateur.promotion,
                             style: const TextStyle(fontSize: 10),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -90,7 +76,7 @@ class _PublicationCardState extends State<PublicationCard> {
                         Padding(
                           padding: const EdgeInsets.only(left: 1, top: 2),
                           child: Text(
-                            widget.datePublication,
+                            widget.publication.datePublication,
                             style: const TextStyle(fontSize: 10),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -98,27 +84,29 @@ class _PublicationCardState extends State<PublicationCard> {
                       ],
                     ),
                   ),
-                   IconButton(
-                      icon: const Icon(Icons.more_horiz),
-                       onPressed: () {},
-            ),
+                  IconButton(
+                    icon: const Icon(Icons.more_horiz),
+                    onPressed: () {},
+                  ),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 15, bottom: 10, left: 20, right: 10),
+              padding: const EdgeInsets.only(
+                  top: 15, bottom: 10, left: 20, right: 10),
               child: Text(
-                widget.description,
-                overflow: TextOverflow.ellipsis,),
+                widget.publication.description,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-            if (widget.image != null)
+            if (widget.publication.image != null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
                     child: Image.asset(
-                      width: MediaQuery.of(context).size.width*0.95,
-                      widget.image!,
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      widget.publication.image!,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -133,7 +121,8 @@ class _PublicationCardState extends State<PublicationCard> {
                     child: Row(
                       children: <Widget>[
                         const SizedBox(width: 10.0),
-                        Text('${widget.likes}'),
+                        // Text('${widget.like.isLiked}'),
+                        Text("${widget.publication.likes?.length == null ? "0" : widget.publication.likes?.length}"),
                         const SizedBox(width: 4.0),
                         const SizedBox(width: 4.0),
                         const Text(
@@ -146,7 +135,8 @@ class _PublicationCardState extends State<PublicationCard> {
                   Padding(
                     padding: const EdgeInsets.only(right: 10.0),
                     child: Text(
-                      '${widget.commentaires} commentaires',
+                      // '${widget.commentaires} commentaires',
+                      '${widget.publication.commentaires?.length == null ? "0" : widget.publication.commentaires?.length} commentaires',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -165,11 +155,13 @@ class _PublicationCardState extends State<PublicationCard> {
                 children: <Widget>[
                   Row(
                     children: [
-                      SizedBox(width: screenWidth*0.08),
+                      SizedBox(width: screenWidth * 0.08),
                       InkWell(
                         onTap: changeClick,
                         child: Icon(
-                          click? FontAwesomeIcons.solidHeart : FontAwesomeIcons.heart,
+                          click
+                              ? FontAwesomeIcons.solidHeart
+                              : FontAwesomeIcons.heart,
                           color: click ? Colors.red : Colors.grey,
                         ),
                       ),
@@ -178,7 +170,7 @@ class _PublicationCardState extends State<PublicationCard> {
                   Row(
                     children: [
                       const Icon(FontAwesomeIcons.commentDots),
-                      SizedBox(width: screenWidth*0.08),
+                      SizedBox(width: screenWidth * 0.08),
                     ],
                   ),
                 ],
