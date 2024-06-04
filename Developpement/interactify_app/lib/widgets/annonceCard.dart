@@ -22,13 +22,17 @@ class AnnonceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Container(
+      margin:  EdgeInsets.only(top: screenWidth*0.01, bottom: screenWidth*0.01, left: screenWidth*0.01, right: screenWidth*0.01),
       decoration: BoxDecoration(
       border: Border.all(
            width: 1,
            color: Colors.grey
-        )),
-        margin:  EdgeInsets.only(top: screenWidth*0.01, bottom: screenWidth*0.01, left: screenWidth*0.01, right: screenWidth*0.01),
+        )
+      ),
       child: Card(
+        surfaceTintColor: Colors.white,
+        shadowColor: Colors.white,
+        color: Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -47,13 +51,13 @@ class AnnonceCard extends StatelessWidget {
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.only(top: 2),
-                              child: Text(username, style:  TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth*0.04),),
+                              child: Text(username, style:  TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth*0.03),),
                             ),
                             Padding(
                           padding: const EdgeInsets.only(left: 1, top: 5),
                           child: Text(
                             cours,
-                            style:  TextStyle(fontSize: screenWidth*0.03),
+                            style:  TextStyle(fontSize: screenWidth*0.025),
                           ),
                           )
                           ],
@@ -68,11 +72,11 @@ class AnnonceCard extends StatelessWidget {
                 ),
                     Padding(
                       padding:  EdgeInsets.only(top: 15,bottom: 10, left: screenWidth*0.01, right: screenWidth*0.01),
-                      child: Text(description, style: TextStyle(fontSize: screenWidth*0.05),),
+                      child: Text(description, style: TextStyle(fontSize: screenWidth*0.04),),
                     ),
                      Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(datePublication, style:  TextStyle(color: Colors.grey, fontSize: screenWidth*0.02),),
+                      child: Text(datePublication, style:  TextStyle(color: Colors.grey, fontSize: screenWidth*0.038),),
                       ),
               ],
             ),
