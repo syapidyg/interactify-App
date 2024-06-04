@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interactify_app/Pages/profile_page.dart';
 
 class NavBar extends StatefulWidget {
   @override
@@ -26,7 +27,7 @@ class _NavBarState extends State<NavBar> {
         Navigator.pushNamed(context, '/notifications');
         break;
       case 4:
-        Navigator.pushNamed(context, '/profil');
+        Navigator.pushNamed(context, ProfilePage.routeName);
         break;
     }
   }
@@ -34,7 +35,7 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: ('Home'),
@@ -50,6 +51,7 @@ class _NavBarState extends State<NavBar> {
         BottomNavigationBarItem(
           icon: Icon(Icons.notifications),
           label: ('Notifications'),
+          
         ),
         BottomNavigationBarItem(
           icon: CircleAvatar(

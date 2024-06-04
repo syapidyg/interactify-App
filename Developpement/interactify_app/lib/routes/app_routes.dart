@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:interactify_app/Pages/confirm_password_change_page.dart';
 import 'package:interactify_app/Pages/create_new_password_page.dart';
 import 'package:interactify_app/Pages/forget_password_page.dart';
+import 'package:interactify_app/Pages/home_page.dart';
 import 'package:interactify_app/Pages/login_page.dart';
 import 'package:interactify_app/Pages/login_register_page.dart';
 import 'package:interactify_app/Pages/on_boarding_page.dart';
-import 'package:interactify_app/Pages/home_page.dart';
+import 'package:interactify_app/Pages/profile_page.dart';
 import 'package:interactify_app/Pages/register_page.dart';
 
 class AppRoutes {
@@ -56,7 +57,12 @@ class AppRoutes {
       case HomePage.routeName:
         return MaterialPageRoute<void>(
           settings: routeSettings,
-          builder: (BuildContext context) => PasswordConfirmPage(),
+          builder: (BuildContext context) => HomePage(),
+        );
+      case ProfilePage.routeName:
+        return MaterialPageRoute<void>(
+          settings: routeSettings,
+          builder: (BuildContext context) => ProfilePage(),
         );
       default:
         return MaterialPageRoute<void>(
