@@ -69,6 +69,14 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/messenger.png
+  fonts:
+    - family: Yesteryear
+      fonts:
+        - asset: assets/fonts/Yesteryear-Regular.ttf
+    - family: Urbanist
+      fonts:
+        - asset: assets/fonts/Urbanist-VariableFont_wght.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
