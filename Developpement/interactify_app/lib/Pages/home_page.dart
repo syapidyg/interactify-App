@@ -4,6 +4,7 @@ import 'package:interactify_app/models/publication.dart';
 import 'package:interactify_app/models/utilisateur.dart';
 import 'package:interactify_app/widgets/head.dart';
 import 'package:interactify_app/widgets/nav_bar.dart';
+import 'package:interactify_app/widgets/navigators.dart';
 import 'package:interactify_app/widgets/publication_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -67,9 +68,14 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       appBar: const Head(),
       body: ListView(
-        padding: const EdgeInsets.only(top: 10, bottom: 10),
-        children: publications,
-      ),
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            children: [
+              const SizedBox(height: 10),
+              const Navigators(number: 0),
+              const SizedBox(height: 10),
+              ...publications
+              ]
+          ),
       bottomNavigationBar: NavBar(),
     );
   }
