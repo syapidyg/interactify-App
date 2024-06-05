@@ -8,8 +8,7 @@ import 'package:interactify_app/widgets/navigators.dart';
 import 'package:interactify_app/widgets/publication_card.dart';
 
 class HomePage extends StatefulWidget {
-
-    static const routeName = "/home";
+  static const routeName = "/home";
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -56,7 +55,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     publication1 = Publication(
         datePublication: "2015-12-4",
-        description: "yyyyyyyyyy hhhhhhhhhhhhhhh hhhhhhhhhhhhhh ddddddddddddd vvvvvvvvvvvvvvvv bbbbbbbbbbbbbbb nnnnnnnnnnnnnnnn ggggggggggggggggggg ooooooooooooooooooooooo",
+        description:
+            "yyyyyyyyyy hhhhhhhhhhhhhhh hhhhhhhhhhhhhh ddddddddddddd vvvvvvvvvvvvvvvv bbbbbbbbbbbbbbb nnnnnnnnnnnnnnnn ggggggggggggggggggg ooooooooooooooooooooooo",
         image: "assets/images/Rectangle 4750.png",
         commentaires: null,
         likes: null,
@@ -68,14 +68,21 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       appBar: const Head(),
       body: ListView(
-            padding: const EdgeInsets.only(top: 10, bottom: 10),
-            children: [
-              const SizedBox(height: 10),
-              const Navigators(number: 0),
-              const SizedBox(height: 10),
-              ...publications
-              ]
-          ),
+          padding: const EdgeInsets.only(top: 10, bottom: 10),
+          children: [
+            const SizedBox(height: 10),
+            const Navigators(number: 0),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5),
+              child: SizedBox(
+                child: Divider(
+                  color: Color.fromARGB(13, 46, 163, 248),
+                  thickness: 10,
+                ),
+              ),
+            ),
+            ...publications
+          ]),
       bottomNavigationBar: NavBar(),
     );
   }

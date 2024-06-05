@@ -41,7 +41,9 @@ class _PublicationCardState extends State<PublicationCard> {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0), // Coins carrés
-        side: BorderSide(color: Colors.grey, width: 2), // Bordure grise
+        side: BorderSide(
+            color: Color.fromARGB(50, 173, 171, 170),
+            width: 2), // Bordure grise
       ),
       margin: EdgeInsets.only(
           bottom: screenWidth * 0.016,
@@ -102,8 +104,8 @@ class _PublicationCardState extends State<PublicationCard> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 15, bottom: 10, left: 20, right: 10),
+            padding:
+                const EdgeInsets.only(top: 15, bottom: 10, left: 20, right: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -111,7 +113,8 @@ class _PublicationCardState extends State<PublicationCard> {
                   isExpanded
                       ? widget.publication.description
                       : widget.publication.description.length > 100
-                          ? widget.publication.description.substring(0, 100) + '...'
+                          ? widget.publication.description.substring(0, 100) +
+                              '...'
                           : widget.publication.description,
                   overflow: TextOverflow.clip,
                 ),
@@ -148,7 +151,8 @@ class _PublicationCardState extends State<PublicationCard> {
                   child: Row(
                     children: <Widget>[
                       const SizedBox(width: 10.0),
-                      Text("${widget.publication.likes?.length == null ? "0" : widget.publication.likes?.length}"),
+                      Text(
+                          "${widget.publication.likes?.length == null ? "0" : widget.publication.likes?.length}"),
                       const SizedBox(width: 4.0),
                       const SizedBox(width: 4.0),
                       const Text(
@@ -169,7 +173,7 @@ class _PublicationCardState extends State<PublicationCard> {
             ),
           ),
           const Divider(
-            color: Colors.grey,
+            color: Color.fromARGB(50, 173, 171, 170),
             height: 2,
             thickness: 1,
           ),

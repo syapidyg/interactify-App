@@ -15,33 +15,36 @@ class _NavigatorsState extends State<Navigators> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _selectedIndex = 0;
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => HomePage()),
-              );
-            });
-          },
-          child: _buildNavItem('Pour vous', 0),
-        ),
-        const SizedBox(width: 32),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _selectedIndex = 1;
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => Annonces()),
-              );
-            });
-          },
-          child: _buildNavItem('Annonce', 1),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _selectedIndex = 0;
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
+              });
+            },
+            child: _buildNavItem('Pour vous', 0),
+          ),
+          const SizedBox(width: 32),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _selectedIndex = 1;
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => Annonces()),
+                );
+              });
+            },
+            child: _buildNavItem('Annonces', 1),
+          ),
+        ],
+      ),
     );
   }
 
