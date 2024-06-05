@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interactify_app/Pages/home_page.dart';
 import 'package:interactify_app/Pages/profile_page.dart';
 
 class NavBar extends StatefulWidget {
@@ -15,7 +16,7 @@ class _NavBarState extends State<NavBar> {
     });
     switch (_currentIndex) {
       case 0:
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushNamed(context, HomePage.routeName);
         break;
       case 1:
         Navigator.pushNamed(context, '/search');
@@ -34,36 +35,39 @@ class _NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: ('Home'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: ('Search'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.add_box_rounded),
-          label: ('Post'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.notifications),
-          label: ('Notifications'),
-          
-        ),
-        BottomNavigationBarItem(
-          icon: CircleAvatar(
-            backgroundImage: AssetImage("assets/images/v6.jpg"),
+    return Container(
+      decoration: BoxDecoration(border: Border()),
+      child: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: ('Home'),
           ),
-          label: ('Profil'),
-        ),
-      ],
-      currentIndex: _currentIndex,
-      selectedItemColor: const  Color(0xFF04BBFF),
-      unselectedItemColor: Colors.black,
-      onTap: _onTabTapped,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: ('Search'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_box_rounded),
+            label: ('Post'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: ('Notifications'),
+          ),
+          BottomNavigationBarItem(
+            icon: CircleAvatar(
+              backgroundImage: AssetImage("assets/images/v6.jpg"),
+            ),
+            label: ('Profil'),
+          ),
+        ],
+        currentIndex: _currentIndex,
+        selectedItemColor: const Color(0xFF04BBFF),
+        unselectedItemColor: Colors.black,
+        onTap: _onTabTapped,
+      ),
     );
   }
 }
