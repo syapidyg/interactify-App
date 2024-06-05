@@ -3,14 +3,63 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:interactify_app/Pages/login_page.dart';
 import 'package:interactify_app/Pages/login_register_page.dart';
+import 'package:interactify_app/services/auth_service.dart';
 import 'package:interactify_app/widgets/button_black.dart';
 import 'package:interactify_app/widgets/input_password.dart';
 import 'package:interactify_app/widgets/input_text.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   static const routeName = "/register";
 
   const RegisterPage({super.key});
+
+  @override
+  _RegisterPageState createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _promotionController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final AuthService _authService = AuthService();
+  bool _isLoading = false;
+
+  void _register() async {
+    if (_formKey.currentState!.validate()) {
+      if (_passwordController.text != _confirmPasswordController.text) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Passwords do not match')),
+        );
+        return;
+      }
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        var user = await _authService.register(
+          _usernameController.text,
+          _promotionController.text,
+          _emailController.text,
+          _passwordController.text,
+        );
+        if (user != null) {
+          Navigator.pushNamed(context, LoginPage.routeName);
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Registration failed: $e')),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +71,14 @@ class RegisterPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
               border: Border.all(
-                color: Colors.grey, // Color of the border
-                width: 0.3, // Width of the border
+                color: Colors.grey,
+                width: 0.3,
               ),
-              borderRadius: BorderRadius.circular(8), // Rounded corners
+              borderRadius: BorderRadius.circular(8),
             ),
             child: IconButton(
               hoverColor: Colors.transparent,
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_ios_new_rounded,
                 color: Color(0xFF051C24),
               ),
@@ -43,119 +92,131 @@ class RegisterPage extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                'Hello! Register to get started',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              InputText(
-                hintText: "Username",
-              ),
-              InputText(
-                hintText: "Email",
-              ),
-              InputText(
-                hintText: "Promotion ",
-              ),
-              InputPassword(
-                hintText: "Password",
-              ),
-              InputPassword(
-                hintText: "Confirm Password",
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: ButtonBlack(
-                  texte: "Register",
-                  onPressed: () {
-                    Navigator.pushNamed(context, routeName);
-                  },
-                ),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                      child: Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  )),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text("Or Register with",
+          child: _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Text(
+                        'Hello! Register to get started',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF051C24))),
-                  ),
-                  Expanded(
-                      child: Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  )),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      // Handle Google register button press
-                    },
-                    style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      side: BorderSide(
-                        color: Colors.grey,
-                        width: 1,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 18.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [FaIcon(FontAwesomeIcons.google)],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RichText(
-                    text: TextSpan(
-                      text: 'Already have an account? ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: 'Login Now',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.pushNamed(context, LoginPage.routeName);
-                            },
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                    ),
+                      ),
+                      InputText(
+                        controller: _usernameController,
+                        hintText: "Username",
+                        validator: (value) => value!.isEmpty ? 'Please enter a username' : null,
+                      ),
+                      InputText(
+                        controller: _emailController,
+                        hintText: "Email",
+                        validator: (value) => value!.isEmpty ? 'Please enter an email' : null,
+                      ),
+                      InputText(
+                        controller: _promotionController,
+                        hintText: "Promotion",
+                        validator: (value) => value!.isEmpty ? 'Please enter a promotion' : null,
+                      ),
+                      InputPassword(
+                        controller: _passwordController,
+                        hintText: "Password",
+                        validator: (value) => value!.isEmpty ? 'Please enter a password' : null,
+                      ),
+                      InputPassword(
+                        controller: _confirmPasswordController,
+                        hintText: "Confirm Password",
+                        validator: (value) => value!.length < 6 ? 'Password too short' : null,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: ButtonBlack(
+                          texte: "Register",
+                          onPressed: _register,
+                        ),
+                      ),
+                      const Row(
+                        children: [
+                          Expanded(
+                              child: Divider(
+                            color: Colors.grey,
+                            thickness: 1,
+                          )),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Text("Or Register with",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF051C24))),
+                          ),
+                          Expanded(
+                              child: Divider(
+                            color: Colors.grey,
+                            thickness: 1,
+                          )),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          OutlinedButton(
+                            onPressed: () {
+                            },
+                            style: OutlinedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              side: const BorderSide(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 18.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [FaIcon(FontAwesomeIcons.google)],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              text: 'Already have an account? ',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: 'Login Now',
+                                  style: const TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.pushNamed(context, LoginPage.routeName);
+                                    },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
         ),
       ),
     );

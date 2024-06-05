@@ -69,7 +69,7 @@ class AppRoutes {
             settings: routeSettings,
             builder: (BuildContext context) =>
                 // OnBoardCard(onBoarding: onBoarding),
-                HomePage());
+                OnBoardingPage());
     }
   }
 }
