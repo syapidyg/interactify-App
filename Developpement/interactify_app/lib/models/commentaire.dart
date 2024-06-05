@@ -1,10 +1,27 @@
-import 'package:interactify_app/models/publication.dart';
-import 'package:interactify_app/models/utilisateur.dart';
-
 class Commentaire {
-  final Utilisateur utilisateur;
-  final Publication publication;
-  final String contenu;
+  final String id;
+  final String content;
+  final String userId;
 
-  Commentaire({required this.utilisateur, required this.publication, required this.contenu});
+  Commentaire({
+    required this.id,
+    required this.content,
+    required this.userId,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'content': content,
+      'userId': userId,
+    };
+  }
+
+  factory Commentaire.fromJson(Map<String, dynamic> data) {
+    return Commentaire(
+      id: data['id'],
+      content: data['content'],
+      userId: data['userId'],
+    );
+  }
 }

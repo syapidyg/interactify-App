@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interactify_app/models/users.dart';
 import 'package:interactify_app/models/publication.dart';
 import 'package:interactify_app/models/utilisateur.dart';
 import 'package:interactify_app/widgets/nav_bar.dart';
@@ -11,16 +12,18 @@ class ProfilePage extends StatelessWidget {
 
   final List<PublicationCard> publications = [];
 
-  Utilisateur utilisateur1 = Utilisateur(
-      photoProfil: "assets/images/marx.png",
+  Users utilisateur1 = Users(
+    id: "",
+      photo: "assets/images/marx.png",
       promotion: "X2025",
-      username: "SyapiDYG");
+      username: "SyapiDYG", email: '');
 
   late Publication publication1;
 
   @override
   Widget build(BuildContext context) {
     publication1 = Publication(
+      id: "1",
         datePublication: "2015-12-4",
         description:
             "yyyyyyyyyy hhhhhhhhhhhhhhh hhhhhhhhhhhhhh ddddddddddddd vvvvvvvvvvvvvvvv bbbbbbbbbbbbbbb nnnnnnnnnnnnnnnn ggggggggggggggggggg ooooooooooooooooooooooo",

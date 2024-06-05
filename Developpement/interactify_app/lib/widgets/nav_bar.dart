@@ -57,19 +57,19 @@ class _NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: ('Home'),
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.search),
           label: ('Search'),
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.add_box_rounded),
           label: ('Post'),
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.notifications),
           label: ('Notifications'),
         ),
@@ -78,8 +78,8 @@ class _NavBarState extends State<NavBar> {
               ? CircleAvatar(
                   backgroundImage: NetworkImage(_currentUser!.photo!),
                 )
-              : CircleAvatar(
-                  child: Icon(Icons.person),
+              : const CircleAvatar(
+                  child:  Icon(Icons.person),
                 ),
           label: ('Profil'),
         ),
