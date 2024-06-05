@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interactify_app/widgets/nav_bar.dart';
 
 class PublicationPage extends StatefulWidget {
   static const routeName = "/publications";
@@ -16,7 +17,9 @@ class _PublicationPageState extends State<PublicationPage> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         actions: [
           Padding(

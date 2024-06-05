@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:interactify_app/Pages/list_chats_page.dart';
 
 class Head extends StatelessWidget implements PreferredSizeWidget {
   const Head({super.key});
@@ -21,7 +22,7 @@ class Head extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           icon: Image.asset('assets/images/messenger.png'),
           onPressed: () {
-            Navigator.pushNamed(context, '/messages');
+            Navigator.pushNamed(context, ListChats.routeName);
           },
         ),
       ],

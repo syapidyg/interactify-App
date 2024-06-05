@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interactify_app/models/publication.dart';
 import 'package:interactify_app/models/utilisateur.dart';
+import 'package:interactify_app/widgets/nav_bar.dart';
 import 'package:interactify_app/widgets/publication_card.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -64,8 +65,7 @@ class ProfilePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(14),
               child: Text("@Name Surname",
-                  style:
-                      TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
             ),
             Padding(
               padding: const EdgeInsets.all(8),
@@ -129,10 +129,10 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-
           ],
         ),
       ),
+      bottomNavigationBar: NavBar(),
     );
   }
 }

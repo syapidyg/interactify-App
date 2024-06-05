@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interactify_app/widgets/nav_bar.dart';
 
 class NotificationsPage extends StatelessWidget {
   static const routeName = "/notifications";
@@ -14,7 +15,7 @@ class NotificationsPage extends StatelessWidget {
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
-                // Ajouter une action pour le bouton
+                Navigator.pop(context);
               },
             ),
             title: Center(
@@ -333,6 +334,7 @@ class NotificationsPage extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: NavBar(),
     );
   }
 }

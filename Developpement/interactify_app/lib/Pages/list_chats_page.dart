@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ListChats extends StatelessWidget {
-  const ListChats({super.key, required String title});
+  static const routeName = "/chats";
+
+  const ListChats({super.key});
 
   @override
   Widget build(BuildContext context) {

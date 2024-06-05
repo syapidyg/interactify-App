@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:interactify_app/widgets/nav_bar.dart';
 
 class SearchPage extends StatefulWidget {
   static const routeName = "/search";
 
   const SearchPage({super.key});
-  
 
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -144,6 +144,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ],
       ),
+      bottomNavigationBar: NavBar(),
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:interactify_app/Pages/confirm_password_change_page.dart';
 import 'package:interactify_app/Pages/create_new_password_page.dart';
 import 'package:interactify_app/Pages/forget_password_page.dart';
 import 'package:interactify_app/Pages/home_page.dart';
+import 'package:interactify_app/Pages/list_chats_page.dart';
 import 'package:interactify_app/Pages/login_page.dart';
 import 'package:interactify_app/Pages/login_register_page.dart';
 import 'package:interactify_app/Pages/notifications_page.dart';
@@ -82,6 +83,11 @@ class AppRoutes {
         return MaterialPageRoute<void>(
           settings: routeSettings,
           builder: (BuildContext context) => NotificationsPage(),
+        );
+      case ListChats.routeName:
+        return MaterialPageRoute<void>(
+          settings: routeSettings,
+          builder: (BuildContext context) => ListChats(),
         );
       default:
         return MaterialPageRoute<void>(
