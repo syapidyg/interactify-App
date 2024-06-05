@@ -14,14 +14,12 @@ class Head extends StatelessWidget implements PreferredSizeWidget {
       title: const Text(
         'Interactify',
         style: TextStyle(
-          fontFamily: 'Yesteryear',
-          color: Colors.black,
-          fontSize: 30
-        ),
+            fontFamily: 'Yesteryear', color: Colors.black, fontSize: 30),
       ),
+      automaticallyImplyLeading: false,
       actions: <Widget>[
         IconButton(
-          icon:   Image.asset('assets/images/messenger.png'),
+          icon: Image.asset('assets/images/messenger.png'),
           onPressed: () {
             Navigator.pushNamed(context, '/messages');
           },
@@ -29,6 +27,5 @@ class Head extends StatelessWidget implements PreferredSizeWidget {
       ],
       backgroundColor: Color.fromARGB(13, 46, 163, 248),
     );
-  
   }
 }

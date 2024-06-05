@@ -5,9 +5,13 @@ import 'package:interactify_app/Pages/forget_password_page.dart';
 import 'package:interactify_app/Pages/home_page.dart';
 import 'package:interactify_app/Pages/login_page.dart';
 import 'package:interactify_app/Pages/login_register_page.dart';
+import 'package:interactify_app/Pages/notifications_page.dart';
 import 'package:interactify_app/Pages/on_boarding_page.dart';
 import 'package:interactify_app/Pages/profile_page.dart';
+import 'package:interactify_app/Pages/publication_page.dart';
 import 'package:interactify_app/Pages/register_page.dart';
+import 'package:interactify_app/Pages/search_page.dart';
+import 'package:interactify_app/models/publication.dart';
 
 class AppRoutes {
   Route<dynamic> generateRoute({
@@ -63,6 +67,21 @@ class AppRoutes {
         return MaterialPageRoute<void>(
           settings: routeSettings,
           builder: (BuildContext context) => ProfilePage(),
+        );
+      case SearchPage.routeName:
+        return MaterialPageRoute<void>(
+          settings: routeSettings,
+          builder: (BuildContext context) => SearchPage(),
+        );
+      case PublicationPage.routeName:
+        return MaterialPageRoute<void>(
+          settings: routeSettings,
+          builder: (BuildContext context) => PublicationPage(),
+        );
+      case NotificationsPage.routeName:
+        return MaterialPageRoute<void>(
+          settings: routeSettings,
+          builder: (BuildContext context) => NotificationsPage(),
         );
       default:
         return MaterialPageRoute<void>(

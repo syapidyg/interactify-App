@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:interactify_app/Pages/home_page.dart';
+import 'package:interactify_app/Pages/notifications_page.dart';
 import 'package:interactify_app/Pages/profile_page.dart';
+import 'package:interactify_app/Pages/publication_page.dart';
+import 'package:interactify_app/Pages/search_page.dart';
 import 'package:interactify_app/models/Users.dart';
 import 'package:interactify_app/services/auth_service.dart';
 
@@ -32,16 +36,16 @@ class _NavBarState extends State<NavBar> {
     });
     switch (_currentIndex) {
       case 0:
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushNamed(context, HomePage.routeName);
         break;
       case 1:
-        Navigator.pushNamed(context, '/search');
+        Navigator.pushNamed(context, SearchPage.routeName);
         break;
       case 2:
-        Navigator.pushNamed(context, '/post');
+        Navigator.pushNamed(context, PublicationPage.routeName);
         break;
       case 3:
-        Navigator.pushNamed(context, '/notifications');
+        Navigator.pushNamed(context, NotificationsPage.routeName);
         break;
       case 4:
         Navigator.pushNamed(context, ProfilePage.routeName);
