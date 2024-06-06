@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChatInMessages extends StatelessWidget {
-  const ChatInMessages({super.key, required String title});
+  const ChatInMessages({super.key});
 
   @override
   Widget build(BuildContext context) {

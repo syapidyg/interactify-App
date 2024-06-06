@@ -12,6 +12,7 @@ import 'package:interactify_app/Pages/profile_page.dart';
 import 'package:interactify_app/Pages/publication_page.dart';
 import 'package:interactify_app/Pages/register_page.dart';
 import 'package:interactify_app/Pages/search_page.dart';
+import 'package:interactify_app/Pages/splash_screen.dart';
 import 'package:interactify_app/models/publication.dart';
 
 class AppRoutes {
@@ -89,12 +90,17 @@ class AppRoutes {
           settings: routeSettings,
           builder: (BuildContext context) => ListChats(),
         );
+      case OnBoardingPage.routeName:
+        return MaterialPageRoute<void>(
+          settings: routeSettings,
+          builder: (BuildContext context) => OnBoardingPage(),
+        );
       default:
         return MaterialPageRoute<void>(
             settings: routeSettings,
             builder: (BuildContext context) =>
                 // OnBoardCard(onBoarding: onBoarding),
-                OnBoardingPage());
+                SplashScreen());
     }
   }
 }

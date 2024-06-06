@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interactify_app/pages/annonces_page.dart';
 import 'package:interactify_app/pages/home_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Navigators extends StatefulWidget {
   final int number;
@@ -15,6 +16,8 @@ class _NavigatorsState extends State<Navigators> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
@@ -29,7 +32,7 @@ class _NavigatorsState extends State<Navigators> {
                 );
               });
             },
-            child: _buildNavItem('Pour vous', 0),
+            child: _buildNavItem(localizations.forYou, 0),
           ),
           const SizedBox(width: 32),
           GestureDetector(
@@ -41,7 +44,7 @@ class _NavigatorsState extends State<Navigators> {
                 );
               });
             },
-            child: _buildNavItem('Annonces', 1),
+            child: _buildNavItem(localizations.announces, 1),
           ),
         ],
       ),

@@ -4,6 +4,7 @@ import 'package:interactify_app/models/publication.dart';
 import 'package:interactify_app/models/commentaire.dart';
 import 'package:interactify_app/models/like.dart';
 import 'package:interactify_app/services/publication_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PublicationCard extends StatefulWidget {
   final Publication publication;
@@ -70,6 +71,8 @@ class _PublicationCardState extends State<PublicationCard> {
 
   @override
   Widget build(BuildContext context) {
+        final localizations = AppLocalizations.of(context)!;
+
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Card(
@@ -154,7 +157,7 @@ class _PublicationCardState extends State<PublicationCard> {
                   GestureDetector(
                     onTap: toggleExpansion,
                     child: Text(
-                      isExpanded ? "Voir moins" : "Voir plus...",
+                      isExpanded ? localizations.seeLess : localizations.seeMore,
                       style: TextStyle(color: Colors.blue),
                     ),
                   ),

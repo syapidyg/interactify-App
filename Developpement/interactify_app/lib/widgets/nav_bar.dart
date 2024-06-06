@@ -6,6 +6,7 @@ import 'package:interactify_app/Pages/publication_page.dart';
 import 'package:interactify_app/Pages/search_page.dart';
 import 'package:interactify_app/models/Users.dart';
 import 'package:interactify_app/services/auth_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NavBar extends StatefulWidget {
   @override
@@ -55,23 +56,25 @@ class _NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
-        const BottomNavigationBarItem(
+         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          label: ('Home'),
+          label: (localizations.home),
         ),
-        const BottomNavigationBarItem(
+         BottomNavigationBarItem(
           icon: Icon(Icons.search),
-          label: ('Search'),
+          label: (localizations.search),
         ),
-        const BottomNavigationBarItem(
+         BottomNavigationBarItem(
           icon: Icon(Icons.add_box_rounded),
-          label: ('Post'),
+          label: (localizations.post),
         ),
-        const BottomNavigationBarItem(
+         BottomNavigationBarItem(
           icon: Icon(Icons.notifications),
-          label: ('Notifications'),
+          label: (localizations.notifications),
         ),
         BottomNavigationBarItem(
           icon: _currentUser != null && _currentUser!.photo != null
@@ -79,9 +82,9 @@ class _NavBarState extends State<NavBar> {
                   backgroundImage: NetworkImage(_currentUser!.photo!),
                 )
               : const CircleAvatar(
-                  child:  Icon(Icons.person),
+                  child: Icon(Icons.person),
                 ),
-          label: ('Profil'),
+          label: (localizations.profil),
         ),
       ],
       currentIndex: _currentIndex,

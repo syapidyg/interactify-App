@@ -1,4 +1,4 @@
-{
+{"@@locale": "en",
   "appTitle": "Interactify_App",
   "@appTitle": {
     "description": "The title of the application"
@@ -7,12 +7,52 @@
   "@appName": {
     "description": "The name of the application"
   },
-  "appTest": "'You have pushed the button this many times:',",
-  "@appTest": {
-    "description": "Text button"
+  "seeMore": "See more...",
+  "@seeMore": {
+    "description": "See more"
   },
-  "appFull": "full",
-  "@appFull": {
-    "description": "full"
+  "seeLess": "See less...",
+  "@seeLess": {
+    "description": "See less"
+  },
+  "forYou": "For you",
+  "@forYou": {
+    "description": "For You"
+  },
+  "announces": "Announces",
+  "@announces": {
+    "description": "Announces"
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Home"
+  },
+  "search": "Search",
+  "@search": {
+    "description": "Search"
+  },
+  "post": "Post",
+  "@post": {
+    "description": "Post"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Notifications"
+  },
+  "profil": "Profil",
+  "@profil": {
+    "description": "Profiil"
+  },
+  "onBoarding_page1": "help you share best videos with everyone.",
+  "@onBoarding_page1": {
+    "description": "onBoarding_page1"
+  },
+  "onBoarding_page2": "You can create the most impressive moment.",
+  "@onBoarding_page2": {
+    "description": "onBoarding_page2"
+  },
+  "onBoarding_page3": "Let Make Explore!",
+  "@onBoarding_page3": {
+    "description": "onBoarding_page3"
   }
 }
