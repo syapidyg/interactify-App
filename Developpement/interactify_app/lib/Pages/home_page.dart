@@ -1,11 +1,10 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:interactify_app/models/publication.dart';
-import 'package:interactify_app/models/utilisateur.dart';
 import 'package:interactify_app/widgets/head.dart';
 import 'package:interactify_app/widgets/nav_bar.dart';
 import 'package:interactify_app/widgets/navigators.dart';
 import 'package:interactify_app/widgets/publication_card.dart';
+import 'package:interactify_app/services/publication_service.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = "/home";
@@ -15,74 +14,61 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<PublicationCard> publications = [];
+  final PublicationService _publicationService = PublicationService();
+  List<Publication>? publications;
+  bool isLoading = true; // To track loading state
+  String? errorMessage; // To store error message if any
 
-  Utilisateur utilisateur1 = Utilisateur(
-      photoProfil: "assets/images/marx.png",
-      promotion: "X2025",
-      username: "SyapiDYG");
-
-  late Publication publication1;
-
-  /*@override
+  @override
   void initState() {
     super.initState();
     _loadPublications();
   }
 
   Future<void> _loadPublications() async {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-      .collection('publications')
-      .get();
-
-    querySnapshot.docs.forEach((doc) {
-      publications.add(
-        PublicationCard(
-          photoProfil: doc['photoProfil'],
-          username: doc['username'],
-          promotion: doc['promotion'],
-          datePublication: doc['datePublication'],
-          description: doc['description'],
-          image: doc['image'],
-          likes: doc['likes'],
-          commentaires: doc['commentaires'],
-        ),
-      );
-    });
-  }*/
+    try {
+      List<Publication> fetchedPublications = await _publicationService.getPosts();
+      setState(() {
+        publications = fetchedPublications;
+        isLoading = false; // Set loading to false when data is loaded
+      });
+    } catch (e) {
+      setState(() {
+        errorMessage = 'Error loading publications: $e';
+        isLoading = false; // Set loading to false even if there's an error
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    publication1 = Publication(
-        datePublication: "2015-12-4",
-        description:
-            "yyyyyyyyyy hhhhhhhhhhhhhhh hhhhhhhhhhhhhh ddddddddddddd vvvvvvvvvvvvvvvv bbbbbbbbbbbbbbb nnnnnnnnnnnnnnnn ggggggggggggggggggg ooooooooooooooooooooooo",
-        image: "assets/images/Rectangle 4750.png",
-        commentaires: null,
-        likes: null,
-        utilisateur: utilisateur1);
-
-    PublicationCard card = PublicationCard(publication: publication1);
-    publications.add(card);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const Head(),
-      body: ListView(
-          padding: const EdgeInsets.only(top: 10, bottom: 10),
-          children: [
-            const SizedBox(height: 10),
-            const Navigators(number: 0),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5),
-              child: SizedBox(
-                child: Divider(
-                  color: Color.fromARGB(13, 46, 163, 248),
-                  thickness: 10,
+      body: isLoading
+          ? Center(child: CircularProgressIndicator()) // Show loading spinner
+          : errorMessage != null
+              ? Center(child: Text(errorMessage!)) // Show error message if any
+              : ListView(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  children: [
+                    const SizedBox(height: 10),
+                    const Navigators(number: 0),
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 5),
+                      child: SizedBox(
+                        child: Divider(
+                          color: Color.fromARGB(13, 46, 163, 248),
+                          thickness: 10,
+                        ),
+                      ),
+                    ),
+                    if (publications != null && publications!.isNotEmpty)
+                      ...publications!.map((publication) => PublicationCard(publication: publication)).toList()
+                    else
+                      Center(child: Text('No publications available')), // Show message if list is empty
+                  ],
                 ),
-              ),
-            ),
-            ...publications
-          ]),
       bottomNavigationBar: NavBar(),
     );
   }

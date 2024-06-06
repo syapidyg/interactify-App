@@ -1,31 +1,65 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-//import 'package:interactify_app/models/commentaire.dart';
-//import 'package:interactify_app/models/like.dart';
 import 'package:interactify_app/models/publication.dart';
+import 'package:interactify_app/models/commentaire.dart';
+import 'package:interactify_app/models/like.dart';
+import 'package:interactify_app/services/publication_service.dart';
 
 class PublicationCard extends StatefulWidget {
-  Publication publication;
+  final Publication publication;
 
-  PublicationCard({
-    super.key,
-    required this.publication,
-  });
+  PublicationCard({Key? key, required this.publication}) : super(key: key);
 
   @override
   _PublicationCardState createState() => _PublicationCardState();
 }
 
 class _PublicationCardState extends State<PublicationCard> {
-  bool click = false;
+  bool isLiked = false;
   bool isExpanded = false;
+  List<Commentaire> comments = [];
+  final PublicationService _PublicationService = PublicationService();
 
-  void changeClick() {
-    setState(() {
-      click = !click;
-    });
+  @override
+  void initState() {
+    super.initState();
+    if (widget.publication.likes != null) {
+          isLiked = widget.publication.likes!.any((like) => like.userId == widget.publication.utilisateur.id);
+        }    
+    _loadComments();
+  }
+
+  void toggleLike() async {
+    if (widget.publication.likes != null) {
+    if (isLiked) {
+      // Remove like
+      Like like = widget.publication.likes!.firstWhere((like) => like.userId == widget.publication.utilisateur.id);
+      await _PublicationService.removeLike(widget.publication.id, like.id);
+      setState(() {
+        isLiked = false;
+        widget.publication.likes!.remove(like);
+      });
+    } else {
+      // Add like
+      Like newLike = Like(id: '', userId: widget.publication.utilisateur.id);
+      await _PublicationService.addLike(widget.publication.id, newLike);
+      setState(() {
+        isLiked = true;
+        widget.publication.likes!.add(newLike);
+      });
+    }
+    }
+  }
+
+  void _loadComments() async {
+    comments = await _PublicationService.getComments(widget.publication.id);
+    setState(() {});
+  }
+
+  void _addComment(String content) async {
+    Commentaire newComment = Commentaire(id: '', content: content, userId: widget.publication.utilisateur.id);
+    await _PublicationService.addComment(widget.publication.id, newComment);
+    _loadComments(); // Reload comments to display the new one
   }
 
   void toggleExpansion() {
@@ -42,8 +76,9 @@ class _PublicationCardState extends State<PublicationCard> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0), // Coins carrés
         side: BorderSide(
-            color: Color.fromARGB(50, 173, 171, 170),
-            width: 2), // Bordure grise
+          color: Color.fromARGB(50, 173, 171, 170),
+          width: 2, // Bordure grise
+        ),
       ),
       margin: EdgeInsets.only(
           bottom: screenWidth * 0.016,
@@ -60,8 +95,7 @@ class _PublicationCardState extends State<PublicationCard> {
             child: Row(
               children: <Widget>[
                 CircleAvatar(
-                  backgroundImage:
-                      AssetImage(widget.publication.utilisateur.photoProfil),
+                  backgroundImage: NetworkImage(widget.publication.utilisateur.photo! ?? 'https://static.vecteezy.com/ti/vecteur-libre/t1/2318271-icone-de-profil-utilisateur-vectoriel.jpg'),
                   radius: 30,
                 ),
                 const SizedBox(width: 8.0),
@@ -104,8 +138,7 @@ class _PublicationCardState extends State<PublicationCard> {
             ),
           ),
           Padding(
-            padding:
-                const EdgeInsets.only(top: 15, bottom: 10, left: 20, right: 10),
+            padding: const EdgeInsets.only(top: 15, bottom: 10, left: 20, right: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -113,8 +146,7 @@ class _PublicationCardState extends State<PublicationCard> {
                   isExpanded
                       ? widget.publication.description
                       : widget.publication.description.length > 100
-                          ? widget.publication.description.substring(0, 100) +
-                              '...'
+                          ? widget.publication.description.substring(0, 100) + '...'
                           : widget.publication.description,
                   overflow: TextOverflow.clip,
                 ),
@@ -134,7 +166,7 @@ class _PublicationCardState extends State<PublicationCard> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  child: Image.asset(
+                  child: Image.network(
                     width: MediaQuery.of(context).size.width * 0.95,
                     widget.publication.image!,
                     fit: BoxFit.cover,
@@ -151,9 +183,7 @@ class _PublicationCardState extends State<PublicationCard> {
                   child: Row(
                     children: <Widget>[
                       const SizedBox(width: 10.0),
-                      Text(
-                          "${widget.publication.likes?.length == null ? "0" : widget.publication.likes?.length}"),
-                      const SizedBox(width: 4.0),
+                      Text("${widget.publication.likes?.length ?? 0}"),
                       const SizedBox(width: 4.0),
                       const Text(
                         'Likes',
@@ -165,7 +195,7 @@ class _PublicationCardState extends State<PublicationCard> {
                 Padding(
                   padding: const EdgeInsets.only(right: 10.0),
                   child: Text(
-                    '${widget.publication.commentaires?.length == null ? "0" : widget.publication.commentaires?.length} commentaires',
+                    '${widget.publication.commentaires?.length ?? 0} commentaires',
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -186,23 +216,78 @@ class _PublicationCardState extends State<PublicationCard> {
                   children: [
                     SizedBox(width: screenWidth * 0.08),
                     InkWell(
-                      onTap: changeClick,
+                      onTap: toggleLike,
                       child: Icon(
-                        click
-                            ? FontAwesomeIcons.solidHeart
-                            : FontAwesomeIcons.heart,
-                        color: click ? Colors.red : Colors.grey,
+                        isLiked ? FontAwesomeIcons.solidHeart : FontAwesomeIcons.heart,
+                        color: isLiked ? Colors.red : Colors.grey,
                       ),
                     ),
                   ],
                 ),
                 Row(
                   children: [
-                    const Icon(FontAwesomeIcons.commentDots),
+                    GestureDetector(
+                      onTap: () {
+                        // Display comments section
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => CommentSection(
+                            publication: widget.publication,
+                            comments: comments,
+                            addComment: _addComment,
+                          ),
+                        );
+                      },
+                      child: Icon(FontAwesomeIcons.commentDots),
+                    ),
                     SizedBox(width: screenWidth * 0.08),
                   ],
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CommentSection extends StatelessWidget {
+  final Publication publication;
+  final List<Commentaire> comments;
+  final Function(String) addComment;
+
+  CommentSection({required this.publication, required this.comments, required this.addComment});
+
+  @override
+  Widget build(BuildContext context) {
+    TextEditingController _commentController = TextEditingController();
+
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: comments.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(comments[index].content),
+                );
+              },
+            ),
+          ),
+          TextField(
+            controller: _commentController,
+            decoration: InputDecoration(
+              labelText: 'Add a comment',
+              suffixIcon: IconButton(
+                icon: Icon(Icons.send),
+                onPressed: () {
+                  addComment(_commentController.text);
+                  _commentController.clear();
+                },
+              ),
             ),
           ),
         ],

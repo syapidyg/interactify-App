@@ -1,9 +1,23 @@
-import 'package:interactify_app/models/publication.dart';
-import 'package:interactify_app/models/utilisateur.dart';
-
 class Like {
-  final Utilisateur utilisateur;
-  final bool isLiked;
+  final String id;
+  final String userId;
 
-  Like(this.isLiked, {required this.utilisateur});
+  Like({
+    required this.id,
+    required this.userId,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'userId': userId,
+    };
+  }
+
+  factory Like.fromJson(Map<String, dynamic> data) {
+    return Like(
+      id: data['id'],
+      userId: data['userId'],
+    );
+  }
 }

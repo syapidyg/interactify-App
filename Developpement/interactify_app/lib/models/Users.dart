@@ -20,7 +20,7 @@ class Users {
       username: json['username'],
       promotion: json['promotion'],
       email: json['email'],
-      photo: json['photo'],
+      photo: json['photo'] ?? ' ',
     );
   }
 
