@@ -1,19 +1,18 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:interactify_app/models/Users.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // Method for registering a new user
-  Future<Users?> register(String username, String promotion, String email, String password) async {
+  Future<Users?> register(
+      String username, String promotion, String email, String password) async {
     try {
-
-      
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
       User? user = userCredential.user;
 
       if (user != null) {
@@ -24,7 +23,10 @@ class AuthService {
           email: email,
         );
 
-        await _firestore.collection('users').doc(user.uid).set(utilisateur.toJson());
+        await _firestore
+            .collection('users')
+            .doc(user.uid)
+            .set(utilisateur.toJson());
         return utilisateur;
       }
       return null;
@@ -36,14 +38,16 @@ class AuthService {
   // Method for logging in an existing user
   Future<Users?> login(String email, String password) async {
     try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
       User? user = userCredential.user;
+      String userId = user!.uid;
+      SharedPreferences prefs = await await SharedPreferences.getInstance();
+      prefs.setString('userId', userId);
 
-      if (user != null) {
-        DocumentSnapshot doc = await _firestore.collection('users').doc(user.uid).get();
-        return Users.fromJson(doc.data() as Map<String, dynamic>);
-      }
-      return null;
+      DocumentSnapshot doc =
+          await _firestore.collection('users').doc(user.uid).get();
+      return Users.fromJson(doc.data() as Map<String, dynamic>);
     } catch (e) {
       throw Exception('Login failed: $e');
     }
@@ -52,7 +56,8 @@ class AuthService {
   Future<Users?> getCurrentUser() async {
     User? user = _auth.currentUser;
     if (user != null) {
-      DocumentSnapshot doc = await _firestore.collection('users').doc(user.uid).get();
+      DocumentSnapshot doc =
+          await _firestore.collection('users').doc(user.uid).get();
       return Users.fromJson(doc.data() as Map<String, dynamic>);
     }
     return null;
