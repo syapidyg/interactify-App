@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:interactify_app/Pages/home_page.dart';
 import 'package:interactify_app/Pages/on_boarding_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,13 +20,30 @@ class _SplashScreenState extends State<SplashScreen> {
   _navigateToHome() async {
     await Future.delayed(Duration(seconds: 5), () {});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => OnBoardingPage()));
+        context,
+        MaterialPageRoute(
+          builder: (context) => FutureBuilder<SharedPreferences>(
+            future: SharedPreferences.getInstance(),
+            builder: (BuildContext context, snapshot) {
+              if (snapshot.hasData) {
+                String? userId = snapshot.data!.getString('userId');
+                if (userId != null && userId.isNotEmpty) {
+                  return HomePage();
+                } else {
+                  return OnBoardingPage();
+                }
+              }else{
+                return CircularProgressIndicator();
+              }
+            },
+          ),
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
-    double imageWidth = MediaQuery.of(context).size.width ;
-    double imageheight = MediaQuery.of(context).size.height ;
+    double imageWidth = MediaQuery.of(context).size.width;
+    double imageheight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: Stack(
