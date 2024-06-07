@@ -28,7 +28,7 @@ class PublicationRepository {
       String publicationId) async {
     QuerySnapshot docSnapshot = await _publicationCollection
         .doc(publicationId)
-        .collection("comments")
+        .collection("commentaires")
         .get();
     if (docSnapshot.docs.isNotEmpty) {
       List<Commentaire> commentaires = (docSnapshot.docs)

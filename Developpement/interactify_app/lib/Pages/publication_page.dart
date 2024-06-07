@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:interactify_app/Pages/home_page.dart';
@@ -23,6 +25,8 @@ class _PublicationPageState extends State<PublicationPage> {
   File? _imageFile;
   bool _isPosting = false;
   Users? _currentUser;
+  dynamic _image;
+  String? fileName;
 
   @override
   void initState() {
@@ -38,11 +42,15 @@ class _PublicationPageState extends State<PublicationPage> {
   }
 
   Future<void> _pickImage() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _imageFile = File(image!.path);
+    FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false, type: FileType.image);
+    if (result!= null) {
+      setState(() {
+      _image = result.files.first.bytes;
+      fileName = result.files.first.name;
+      _imageFile = File(result.files.first.path!);
     });
+
+    }
   }
 
   Future<void> _postPublication() async {
@@ -68,17 +76,17 @@ class _PublicationPageState extends State<PublicationPage> {
         imageUrl = await _publicationService.uploadImage(_imageFile!);
       }
       
-      // Publication newPublication = Publication(
-      //   id: '', // This will be set by Firestore
-      //   utilisateur: _currentUser!,
-      //   datePublication: DateTime.now().toString(),
-      //   description: _descriptionController.text,
-      //   image: imageUrl,
-      //   likes: [],
-      //   commentaires: [],
-      // );
+       Publication newPublication = Publication(
+         id: '', 
+         utilisateurId: _currentUser!.id,
+         datePublication: Timestamp.fromDate(DateTime.now()),
+         description: _descriptionController.text,
+         image: imageUrl,
+         likes: [],
+         commentaires: [],
+       );
 
-      // await _publicationService.addPost(newPublication);
+      await _publicationService.addPost(newPublication, _imageFile!);
 
       _descriptionController.clear();
       setState(() {
@@ -170,14 +178,19 @@ class _PublicationPageState extends State<PublicationPage> {
                   ),
                 ),
               ),
-              if (_imageFile != null)
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Image.file(
-                    _imageFile!,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _image != null
+                            ? Image.memory(
+                                _image,
+                                fit: BoxFit.cover,
+                              )
+                            : const Center(
+                                child:  Icon(
+                                  Icons.add_photo_alternate,
+                                  color: Colors.white,
+                                  size: 60,                             ),
+                              ),
                 ),
             ],
           ),

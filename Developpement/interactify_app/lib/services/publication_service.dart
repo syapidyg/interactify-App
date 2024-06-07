@@ -26,13 +26,17 @@ class PublicationService {
     }
   }
 
-  Future<void> addPost(Publication post) async {
+  Future<void> addPost(Publication post, File imageFile) async {
     try {
+
+      String? imageUrl = await uploadImage(imageFile);
+      print(imageUrl);
+
       DocumentReference postRef = await _firestore.collection('posts').add({
         'userId': post.utilisateurId,
         'datePublication': post.datePublication,
         'description': post.description,
-        //'image': post.image ?? ''
+        'image': imageUrl
       });
 
       await postRef.collection('likes').doc('init').set({});
@@ -83,7 +87,7 @@ class PublicationService {
       await _firestore
           .collection('posts')
           .doc(postId)
-          .collection('comments')
+          .collection('commentaires')
           .add(Commentaire.convertToMap(comment));
     } catch (e) {
       print('Error adding comment: $e');
@@ -96,7 +100,7 @@ class PublicationService {
       QuerySnapshot commentsSnapshot = await _firestore
           .collection('posts')
           .doc(postId)
-          .collection('comments')
+          .collection('commentaires')
           .get();
       return commentsSnapshot.docs
           .map((doc) =>
