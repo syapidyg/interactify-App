@@ -27,6 +27,7 @@ class _PublicationPageState extends State<PublicationPage> {
   Users? _currentUser;
   dynamic _image;
   String? fileName;
+  
 
   @override
   void initState() {

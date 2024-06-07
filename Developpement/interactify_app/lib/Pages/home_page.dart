@@ -7,6 +7,7 @@ import 'package:interactify_app/widgets/nav_bar.dart';
 import 'package:interactify_app/widgets/navigators.dart';
 import 'package:interactify_app/widgets/publication_card.dart';
 import 'package:interactify_app/services/publication_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = "/home";
@@ -43,11 +44,10 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const Head(),
@@ -75,9 +75,7 @@ class _HomePageState extends State<HomePage> {
                               PublicationCard(publication: publication))
                           .toList()
                     else
-                      Center(
-                          child: Text(
-                              'No publications available')),
+                      Center(child: Text(localizations.noPublication)),
                   ],
                 ),
       bottomNavigationBar: NavBar(),

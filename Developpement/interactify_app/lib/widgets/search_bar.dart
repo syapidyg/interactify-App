@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchingBar extends StatelessWidget {
   final TextEditingController controllerTextEditing;
@@ -8,6 +9,8 @@ class SearchingBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final localizations = AppLocalizations.of(context)!;
+
     return Row(
       children: [
         Expanded(
@@ -36,7 +39,7 @@ class SearchingBar extends StatelessWidget {
                       fontSize: 18,
                     ),
                     decoration: const InputDecoration(
-                      hintText: 'Search',
+                      hintText: "search",
                       hintStyle: TextStyle(
                         color: Color.fromARGB(137, 56, 55, 55),
                         fontSize: 18,

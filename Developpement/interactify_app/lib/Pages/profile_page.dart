@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:interactify_app/Pages/setting_page.dart';
 import 'package:interactify_app/models/users.dart';
 import 'package:interactify_app/models/publication.dart';
 import 'package:interactify_app/models/utilisateur.dart';
 import 'package:interactify_app/widgets/nav_bar.dart';
 import 'package:interactify_app/widgets/publication_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfilePage extends StatelessWidget {
   static const routeName = "/profile/user";
@@ -25,6 +27,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     publication1 = Publication(
         id: "1",
         datePublication: Timestamp.now(),
@@ -55,7 +59,7 @@ class ProfilePage extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.settings),
               onPressed: () {
-                // Ajouter la logique de prise de photo ici
+                Navigator.pushNamed(context, SettingsPage.routeName);
               },
             ),
           ],
@@ -72,8 +76,7 @@ class ProfilePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(14),
               child: Text("@Name Surname",
-                  style:
-                      TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
             ),
             Padding(
               padding: const EdgeInsets.all(8),
@@ -87,7 +90,7 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 20),
                         ),
-                        Text("Posts",
+                        Text(localizations.posts,
                             style: TextStyle(fontWeight: FontWeight.w500))
                       ],
                     ),
@@ -105,26 +108,13 @@ class ProfilePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(
-                          "50",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 20),
-                        ),
-                        Text("Following",
-                            style: TextStyle(fontWeight: FontWeight.w500))
-                      ],
-                    ),
-                  )
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Bienvenue dans mon univers. Je domine le monde et j’ai des amis.",
+                localizations.profileMessage,
                 textAlign: TextAlign.center,
               ),
             ),

@@ -21,20 +21,21 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool _isDarkMode = false;
 
-  // void _toggleTheme(bool isDarkMode) {
-  //   setState(() {
-  //     _isDarkMode = isDarkMode;
-  //   });
-  // }
+  Locale _locale = Locale('en');
+
+  void _changeLanguage(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: "Interactify",
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: Locale("en"),
+      locale: _locale,
       theme: ThemeData(
         brightness: Brightness.light,
         textTheme: GoogleFonts.urbanistTextTheme(),
@@ -43,14 +44,9 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.dark,
       ),
       themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      //   onGenerateRoute: (settings) => AppRoutes.generateRoute(
-      //       routeSettings: settings,
-      //       isDarkMode: _isDarkMode,
-      //       toggleTheme: _toggleTheme),
-      // );
       onGenerateRoute: (settings) => AppRoutes().generateRoute(
         routeSettings: settings,
-        // isDarkMode: _isDarkMode,
+        onLocaleChange: _changeLanguage,
         // toggleTheme: _toggleTheme,
       ),
     );

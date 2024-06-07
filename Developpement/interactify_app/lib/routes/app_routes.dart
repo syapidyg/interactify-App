@@ -12,12 +12,13 @@ import 'package:interactify_app/Pages/profile_page.dart';
 import 'package:interactify_app/Pages/publication_page.dart';
 import 'package:interactify_app/Pages/register_page.dart';
 import 'package:interactify_app/Pages/search_page.dart';
+import 'package:interactify_app/Pages/setting_page.dart';
 import 'package:interactify_app/Pages/splash_screen.dart';
-import 'package:interactify_app/models/publication.dart';
 
 class AppRoutes {
   Route<dynamic> generateRoute({
     required RouteSettings routeSettings,
+    required Function(Locale) onLocaleChange,
   }) {
     switch (routeSettings.name) {
       case OnBoardingPage.routeName:
@@ -94,6 +95,11 @@ class AppRoutes {
         return MaterialPageRoute<void>(
           settings: routeSettings,
           builder: (BuildContext context) => OnBoardingPage(),
+        );
+      case SettingsPage.routeName:
+        return MaterialPageRoute<void>(
+          settings: routeSettings,
+          builder: (BuildContext context) => SettingsPage(onLocaleChange: onLocaleChange,),
         );
       default:
         return MaterialPageRoute<void>(
