@@ -1,156 +1,87 @@
 import 'package:flutter/material.dart';
+import 'package:interactify_app/models/Users.dart';
+import 'package:interactify_app/models/utilisateur.dart';
+import 'package:interactify_app/services/user_service.dart';
+import 'package:interactify_app/services/utilisateur_service.dart';
 import 'package:interactify_app/widgets/nav_bar.dart';
+import 'package:interactify_app/widgets/search_bar.dart';
+import 'package:interactify_app/widgets/search_element_row.dart';
 
 class SearchPage extends StatefulWidget {
   static const routeName = "/search";
-
-  const SearchPage({super.key});
+  SearchPage({super.key});
 
   @override
   _SearchPageState createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
+  // final userService = UserService();
+  final UtilisateurService utilisateurService = UtilisateurService();
   final TextEditingController _searchController = TextEditingController();
+  List<Utilisateur> allUsers = [];
+  List<SearchElement> searchelements = [];
+  List<SearchElement> foundElements = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUsers();
+  }
+
+  void fetchUsers() async {
+    List<Utilisateur> utilisateurs =
+        await utilisateurService.getAllUtilisateur();
+    setState(() {
+      allUsers = utilisateurs;
+      if (allUsers.isNotEmpty) {
+      for (var user in allUsers) {
+        searchelements.add(SearchElement(user: user));
+        foundElements = searchelements;
+      }
+    } 
+    });
+  }
+
+  void _runFilter(String value) {
+    List<SearchElement> results = [];
+    results = searchelements;
+    if (value.isEmpty) {
+      results = searchelements;
+    } else {
+      results = searchelements
+          .where((searchElement) => searchElement.user.username
+              .toLowerCase()
+              .contains(value.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      foundElements = results;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.lightBlue.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: Row(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(left: 16.0),
-                          child: Icon(
-                            Icons.search,
-                            color: Color.fromARGB(137, 56, 55, 55),
-                          ),
-                        ),
-                        Expanded(
-                          child: TextField(
-                            controller: _searchController,
-                            textAlign: TextAlign.start,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                            ),
-                            decoration: const InputDecoration(
-                              hintText: 'Johson Carter',
-                              hintStyle: TextStyle(
-                                color: Color.fromARGB(137, 56, 55, 55),
-                                fontSize: 18,
-                              ),
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8.0),
-                GestureDetector(
-                  onTap: () {
-                    // Effacer le contenu de la zone de recherche
-                    _searchController.clear();
-                  },
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: IconButton(
-                        icon: const Icon(Icons.close),
-                        onPressed: () {
-                          // Effacer le contenu de la zone de recherche
-                          _searchController.clear();
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: SearchingBar(
+                controllerTextEditing: _searchController,
+                runFilter: _runFilter),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: foundElements.length,
+              itemBuilder: (context, index) {
+                return foundElements[index];
+              },
             ),
-          ),
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage("assets/images/profil.jpeg"),
-                ),
-                const SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Jane Cooper',
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 3),
-          Container(
-            width: double.infinity,
-            height: 2,
-            color: const Color.fromARGB(255, 190, 216, 238),
-          ),
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage("assets/images/profil.jpeg"),
-                ),
-                const SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Jane Cooper',
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 3),
-          Container(
-            width: double.infinity,
-            height: 2,
-            color: const Color.fromARGB(255, 190, 216, 238),
           ),
         ],
       ),
       bottomNavigationBar: NavBar(),
     );
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
   }
 }
