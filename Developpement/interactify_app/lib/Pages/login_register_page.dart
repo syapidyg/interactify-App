@@ -51,9 +51,6 @@ class LoginRegisterPage extends StatelessWidget {
                 },
               ),
             ),
-            Container(
-              child: Text("Continue as a guest"),
-            )
           ],
         ),
       ),

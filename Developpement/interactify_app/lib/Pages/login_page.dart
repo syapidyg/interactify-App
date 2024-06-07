@@ -33,7 +33,6 @@ class _LoginPageState extends State<LoginPage> {
         _isLoading = true;
       });
       try {
-        
         await _authService.login(
           _emailController.text,
           _passwordController.text,
@@ -61,10 +60,10 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
               border: Border.all(
-                color: Colors.grey, 
-                width: 0.3, 
+                color: Colors.grey,
+                width: 0.3,
               ),
-              borderRadius: BorderRadius.circular(8), 
+              borderRadius: BorderRadius.circular(8),
             ),
             child: IconButton(
               hoverColor: Colors.transparent,
@@ -134,8 +133,8 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      Navigator.pushNamed(
-                                          context, ForgetPasswordPage.routeName);
+                                      Navigator.pushNamed(context,
+                                          ForgetPasswordPage.routeName);
                                     },
                                 ),
                               ),
@@ -165,7 +164,8 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 10),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
                                     child: Text("Or Login with",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
@@ -188,6 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                                 children: [
                                   OutlinedButton(
                                     onPressed: () {
+                                      _authService.signInWithGoogle();  
                                     },
                                     style: OutlinedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
@@ -203,7 +204,9 @@ class _LoginPageState extends State<LoginPage> {
                                           vertical: 10.0, horizontal: 18.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
-                                        children: [FaIcon(FontAwesomeIcons.google)],
+                                        children: [
+                                          FaIcon(FontAwesomeIcons.google)
+                                        ],
                                       ),
                                     ),
                                   ),
