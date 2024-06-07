@@ -1,16 +1,25 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:interactify_app/Pages/confirm_password_change_page.dart';
 import 'package:interactify_app/Pages/create_new_password_page.dart';
 import 'package:interactify_app/Pages/login_page.dart';
 import 'package:interactify_app/Pages/login_register_page.dart';
+import 'package:interactify_app/services/auth_service.dart';
 import 'package:interactify_app/widgets/button_black.dart';
 import 'package:interactify_app/widgets/input_text.dart';
 
-class ForgetPasswordPage extends StatelessWidget {
+class ForgetPasswordPage extends StatefulWidget {
   static const routeName = "/forgetPassword";
 
   const ForgetPasswordPage({super.key});
 
+  @override
+  State<ForgetPasswordPage> createState() => _ForgetPasswordPageState();
+}
+
+class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
+  final _email = TextEditingController();
+  final _authService = AuthService();
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -75,6 +84,7 @@ class ForgetPasswordPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 0),
                         child: InputText(
+                          controller: _email,
                           hintText: "Enter your Email",
                         ),
                       ),
@@ -86,9 +96,16 @@ class ForgetPasswordPage extends StatelessWidget {
                                 height: 55,
                                 child: ButtonBlack(
                                   texte: "Send Code",
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    await _authService
+                                        .sendPasswordResetLink(_email.text);
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                "Email reset password sent")));
                                     Navigator.pushNamed(context,
-                                        CreateNewPasswordPage.routeName);
+                                        PasswordConfirmPage.routeName);
                                   },
                                 )),
                           ],

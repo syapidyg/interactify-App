@@ -139,53 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           onPressed: _register,
                         ),
                       ),
-                      const Row(
-                        children: [
-                          Expanded(
-                              child: Divider(
-                            color: Colors.grey,
-                            thickness: 1,
-                          )),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Text("Or Register with",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xFF051C24))),
-                          ),
-                          Expanded(
-                              child: Divider(
-                            color: Colors.grey,
-                            thickness: 1,
-                          )),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          OutlinedButton(
-                            onPressed: () {
-                            },
-                            style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              side: const BorderSide(
-                                color: Colors.grey,
-                                width: 1,
-                              ),
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 18.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [FaIcon(FontAwesomeIcons.google)],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
