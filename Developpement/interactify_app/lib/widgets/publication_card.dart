@@ -3,8 +3,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:interactify_app/models/publication.dart';
 import 'package:interactify_app/models/commentaire.dart';
 import 'package:interactify_app/models/like.dart';
+import 'package:interactify_app/models/utilisateur.dart';
 import 'package:interactify_app/services/publication_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:interactify_app/services/utilisateur_service.dart';
 
 class PublicationCard extends StatefulWidget {
   final Publication publication;
@@ -20,46 +22,64 @@ class _PublicationCardState extends State<PublicationCard> {
   bool isExpanded = false;
   List<Commentaire> comments = [];
   final PublicationService _PublicationService = PublicationService();
-
+  final UtilisateurService utilisateurService = UtilisateurService();
+  Utilisateur? user;
   @override
   void initState() {
     super.initState();
     if (widget.publication.likes != null) {
-          isLiked = widget.publication.likes!.any((like) => like.userId == widget.publication.utilisateur.id);
-        }    
+      isLiked = widget.publication.likes!.any(
+          (like) => like.utilisateurId == widget.publication.utilisateurId);
+    }
     _loadComments();
   }
 
   void toggleLike() async {
     if (widget.publication.likes != null) {
-    if (isLiked) {
-      // Remove like
-      Like like = widget.publication.likes!.firstWhere((like) => like.userId == widget.publication.utilisateur.id);
-      await _PublicationService.removeLike(widget.publication.id, like.id);
-      setState(() {
-        isLiked = false;
-        widget.publication.likes!.remove(like);
-      });
-    } else {
-      // Add like
-      Like newLike = Like(id: '', userId: widget.publication.utilisateur.id);
-      await _PublicationService.addLike(widget.publication.id, newLike);
-      setState(() {
-        isLiked = true;
-        widget.publication.likes!.add(newLike);
-      });
-    }
+      if (isLiked) {
+        // Remove like
+        Like like = widget.publication.likes!.firstWhere(
+            (like) => like.utilisateurId == widget.publication.utilisateurId);
+        await _PublicationService.removeLike(widget.publication.id!, like.id!);
+        setState(() {
+          isLiked = false;
+          widget.publication.likes!.remove(like);
+        });
+      } else {
+        // Add like
+        Like newLike = Like(
+            utilisateurId: widget.publication.utilisateurId,
+            publicationId: widget.publication.id!);
+        await _PublicationService.addLike(widget.publication.id!, newLike);
+        setState(() {
+          isLiked = true;
+          widget.publication.likes!.add(newLike);
+        });
+      }
     }
   }
 
   void _loadComments() async {
-    comments = await _PublicationService.getComments(widget.publication.id);
-    setState(() {});
+    comments = await _PublicationService.getComments(widget.publication.id!);
+    setState(() {
+      getUser(widget.publication.utilisateurId);
+    });
+  }
+
+  void getUser(String userId) async {
+    Utilisateur? utilisateur = await utilisateurService.getUserById(userId);
+    setState(() {
+      user = utilisateur;
+    });
   }
 
   void _addComment(String content) async {
-    Commentaire newComment = Commentaire(id: '', content: content, userId: widget.publication.utilisateur.id);
-    await _PublicationService.addComment(widget.publication.id, newComment);
+    Commentaire newComment = Commentaire(
+        date: '',
+        text: content,
+        utilisateurId: widget.publication.utilisateurId,
+        publicationId: widget.publication.id!);
+    await _PublicationService.addComment(widget.publication.id!, newComment);
     _loadComments(); // Reload comments to display the new one
   }
 
@@ -71,7 +91,7 @@ class _PublicationCardState extends State<PublicationCard> {
 
   @override
   Widget build(BuildContext context) {
-        final localizations = AppLocalizations.of(context)!;
+    final localizations = AppLocalizations.of(context)!;
 
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -98,40 +118,49 @@ class _PublicationCardState extends State<PublicationCard> {
             child: Row(
               children: <Widget>[
                 CircleAvatar(
-                  backgroundImage: NetworkImage(widget.publication.utilisateur.photo! ?? 'https://static.vecteezy.com/ti/vecteur-libre/t1/2318271-icone-de-profil-utilisateur-vectoriel.jpg'),
+                  backgroundImage: NetworkImage(user?.photoProfil ??
+                      'https://static.vecteezy.com/ti/vecteur-libre/t1/2318271-icone-de-profil-utilisateur-vectoriel.jpg'),
                   radius: 30,
                 ),
                 const SizedBox(width: 8.0),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 2),
-                        child: Text(
-                          widget.publication.utilisateur.username,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.ellipsis,
+                  child: user == null
+                      ? SizedBox(
+                          width: 10,
+                          height: 10,
+                          child: CircularProgressIndicator(
+                            color: Colors.blue,
+                          ))
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2),
+                              child: Text(
+                                user!.username,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 1, top: 5),
+                              child: Text(
+                                user!.promotion,
+                                style: const TextStyle(fontSize: 10),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(left: 1, top: 2),
+                            //   child: Text(
+                            //     "widget.publication.datePublication",
+                            //     style: const TextStyle(fontSize: 10),
+                            //     overflow: TextOverflow.ellipsis,
+                            //   ),
+                            // ),
+                          ],
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 1, top: 5),
-                        child: Text(
-                          widget.publication.utilisateur.promotion,
-                          style: const TextStyle(fontSize: 10),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 1, top: 2),
-                        child: Text(
-                          widget.publication.datePublication,
-                          style: const TextStyle(fontSize: 10),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.more_horiz),
@@ -141,7 +170,8 @@ class _PublicationCardState extends State<PublicationCard> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 15, bottom: 10, left: 20, right: 10),
+            padding:
+                const EdgeInsets.only(top: 15, bottom: 10, left: 20, right: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -149,7 +179,8 @@ class _PublicationCardState extends State<PublicationCard> {
                   isExpanded
                       ? widget.publication.description
                       : widget.publication.description.length > 100
-                          ? widget.publication.description.substring(0, 100) + '...'
+                          ? widget.publication.description.substring(0, 100) +
+                              '...'
                           : widget.publication.description,
                   overflow: TextOverflow.clip,
                 ),
@@ -157,7 +188,9 @@ class _PublicationCardState extends State<PublicationCard> {
                   GestureDetector(
                     onTap: toggleExpansion,
                     child: Text(
-                      isExpanded ? localizations.seeLess : localizations.seeMore,
+                      isExpanded
+                          ? localizations.seeLess
+                          : localizations.seeMore,
                       style: TextStyle(color: Colors.blue),
                     ),
                   ),
@@ -221,7 +254,9 @@ class _PublicationCardState extends State<PublicationCard> {
                     InkWell(
                       onTap: toggleLike,
                       child: Icon(
-                        isLiked ? FontAwesomeIcons.solidHeart : FontAwesomeIcons.heart,
+                        isLiked
+                            ? FontAwesomeIcons.solidHeart
+                            : FontAwesomeIcons.heart,
                         color: isLiked ? Colors.red : Colors.grey,
                       ),
                     ),
@@ -260,7 +295,10 @@ class CommentSection extends StatelessWidget {
   final List<Commentaire> comments;
   final Function(String) addComment;
 
-  CommentSection({required this.publication, required this.comments, required this.addComment});
+  CommentSection(
+      {required this.publication,
+      required this.comments,
+      required this.addComment});
 
   @override
   Widget build(BuildContext context) {
@@ -275,7 +313,7 @@ class CommentSection extends StatelessWidget {
               itemCount: comments.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(comments[index].content),
+                  title: Text(comments[index].text),
                 );
               },
             ),

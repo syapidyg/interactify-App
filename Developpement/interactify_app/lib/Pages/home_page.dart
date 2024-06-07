@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interactify_app/models/publication.dart';
+import 'package:interactify_app/models/utilisateur.dart';
+import 'package:interactify_app/services/utilisateur_service.dart';
 import 'package:interactify_app/widgets/head.dart';
 import 'package:interactify_app/widgets/nav_bar.dart';
 import 'package:interactify_app/widgets/navigators.dart';
@@ -8,14 +10,15 @@ import 'package:interactify_app/services/publication_service.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = "/home";
-
+  PublicationService publicationService = PublicationService();
+  UtilisateurService utilisateurService = UtilisateurService();
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   final PublicationService _publicationService = PublicationService();
-  List<Publication>? publications;
+  List<Publication> publications = [];
   bool isLoading = true; // To track loading state
   String? errorMessage; // To store error message if any
 
@@ -25,12 +28,12 @@ class _HomePageState extends State<HomePage> {
     _loadPublications();
   }
 
-  Future<void> _loadPublications() async {
+  void _loadPublications() async {
     try {
-      List<Publication> fetchedPublications = await _publicationService.getPosts();
+      List<Publication> pubs = await _publicationService.getAllPub();
       setState(() {
-        publications = fetchedPublications;
-        isLoading = false; // Set loading to false when data is loaded
+        publications = pubs;
+        isLoading = false;
       });
     } catch (e) {
       setState(() {
@@ -39,6 +42,9 @@ class _HomePageState extends State<HomePage> {
       });
     }
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,10 +69,15 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    if (publications != null && publications!.isNotEmpty)
-                      ...publications!.map((publication) => PublicationCard(publication: publication)).toList()
+                    if (publications != null && publications.isNotEmpty)
+                      ...publications
+                          .map((publication) =>
+                              PublicationCard(publication: publication))
+                          .toList()
                     else
-                      Center(child: Text('No publications available')), // Show message if list is empty
+                      Center(
+                          child: Text(
+                              'No publications available')), // Show message if list is empty
                   ],
                 ),
       bottomNavigationBar: NavBar(),

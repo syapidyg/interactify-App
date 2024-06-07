@@ -1,8 +1,8 @@
-import 'dart:js_interop';
-
 import 'package:flutter/material.dart';
 import 'package:interactify_app/models/Users.dart';
+import 'package:interactify_app/models/utilisateur.dart';
 import 'package:interactify_app/services/user_service.dart';
+import 'package:interactify_app/services/utilisateur_service.dart';
 import 'package:interactify_app/widgets/nav_bar.dart';
 import 'package:interactify_app/widgets/search_bar.dart';
 import 'package:interactify_app/widgets/search_element_row.dart';
@@ -16,53 +16,31 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final userService = UserService();
-
+  // final userService = UserService();
+  final UtilisateurService utilisateurService = UtilisateurService();
   final TextEditingController _searchController = TextEditingController();
-  Users user1 = Users(
-      id: "21",
-      photo: "assets/images/user.png",
-      username: "username",
-      promotion: "X2027",
-      email: "yves@gmail.com");
-  Users user2 = Users(
-      id: "21",
-      photo: "assets/images/user.png",
-      username: "Axcel",
-      promotion: "X2027",
-      email: "yves@gmail.com");
-  Users user3 = Users(
-      id: "21",
-      photo: "assets/images/user.png",
-      username: "Chabain",
-      promotion: "X2027",
-      email: "yves@gmail.com");
-
-  List<Users> _foundUser = [];
+  List<Utilisateur> allUsers = [];
   List<SearchElement> searchelements = [];
   List<SearchElement> foundElements = [];
-  List<Users> userList = [];
-  List<Users> userL = [];
-  Future<List<Users>> fetchUser() async {
-    final userService = UserService();
-    userList = await userService.getAllUsers();
-
-    for (var element in userList) {
-      userL.add(Users(element.id, element.photo, element.username, element.promotion));
-    }
-    print(userList);
-    return await userService.getAllUsers();
-  }
 
   @override
   void initState() {
-    fetchUser();
-    _foundUser.addAll(userList);
-    for (var user in _foundUser) {
-      searchelements.add(SearchElement(user: user));
-    }
-    foundElements = searchelements;
     super.initState();
+    fetchUsers();
+  }
+
+  void fetchUsers() async {
+    List<Utilisateur> utilisateurs =
+        await utilisateurService.getAllUtilisateur();
+    setState(() {
+      allUsers = utilisateurs;
+      if (allUsers.isNotEmpty) {
+      for (var user in allUsers) {
+        searchelements.add(SearchElement(user: user));
+        foundElements = searchelements;
+      }
+    } 
+    });
   }
 
   void _runFilter(String value) {
@@ -79,8 +57,6 @@ class _SearchPageState extends State<SearchPage> {
     }
     setState(() {
       foundElements = results;
-      print(searchelements.length);
-      print(foundElements.length);
     });
   }
 

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:interactify_app/models/Users.dart';
+import 'package:interactify_app/models/utilisateur.dart';
 
 class SearchElement extends StatelessWidget {
-  final Users user;
+  final Utilisateur user;
 
   SearchElement({super.key, required this.user});
 
@@ -19,7 +20,7 @@ class SearchElement extends StatelessWidget {
               CircleAvatar(
                 radius: 25,
                 backgroundImage:
-                    AssetImage(user.photo ?? "assets/images/user.png"),
+                    AssetImage(user.photoProfil ?? "assets/images/user.png"),
               ),
               const SizedBox(width: 16),
               Column(

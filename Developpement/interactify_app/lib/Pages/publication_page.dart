@@ -68,17 +68,17 @@ class _PublicationPageState extends State<PublicationPage> {
         imageUrl = await _publicationService.uploadImage(_imageFile!);
       }
       
-      Publication newPublication = Publication(
-        id: '', // This will be set by Firestore
-        utilisateur: _currentUser!,
-        datePublication: DateTime.now().toString(),
-        description: _descriptionController.text,
-        image: imageUrl,
-        likes: [],
-        commentaires: [],
-      );
+      // Publication newPublication = Publication(
+      //   id: '', // This will be set by Firestore
+      //   utilisateur: _currentUser!,
+      //   datePublication: DateTime.now().toString(),
+      //   description: _descriptionController.text,
+      //   image: imageUrl,
+      //   likes: [],
+      //   commentaires: [],
+      // );
 
-      await _publicationService.addPost(newPublication);
+      // await _publicationService.addPost(newPublication);
 
       _descriptionController.clear();
       setState(() {

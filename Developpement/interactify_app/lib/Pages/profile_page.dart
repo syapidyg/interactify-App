@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:interactify_app/models/users.dart';
 import 'package:interactify_app/models/publication.dart';
 import 'package:interactify_app/models/utilisateur.dart';
@@ -13,24 +15,25 @@ class ProfilePage extends StatelessWidget {
   final List<PublicationCard> publications = [];
 
   Users utilisateur1 = Users(
-    id: "",
+      id: "",
       photo: "assets/images/marx.png",
       promotion: "X2025",
-      username: "SyapiDYG", email: '');
+      username: "SyapiDYG",
+      email: '');
 
   late Publication publication1;
 
   @override
   Widget build(BuildContext context) {
     publication1 = Publication(
-      id: "1",
-        datePublication: "2015-12-4",
+        id: "1",
+        datePublication: Timestamp.now(),
         description:
             "yyyyyyyyyy hhhhhhhhhhhhhhh hhhhhhhhhhhhhh ddddddddddddd vvvvvvvvvvvvvvvv bbbbbbbbbbbbbbb nnnnnnnnnnnnnnnn ggggggggggggggggggg ooooooooooooooooooooooo",
         image: "assets/images/Rectangle 4750.png",
         commentaires: null,
         likes: null,
-        utilisateur: utilisateur1);
+        utilisateurId: "F9jiHlFRHDPOxMiCW1p6c1HINvH3");
 
     PublicationCard card = PublicationCard(publication: publication1);
     publications.add(card);
@@ -60,6 +63,7 @@ class ProfilePage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             CircleAvatar(
               radius: 50,
@@ -68,7 +72,8 @@ class ProfilePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(14),
               child: Text("@Name Surname",
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
+                  style:
+                      TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
             ),
             Padding(
               padding: const EdgeInsets.all(8),
@@ -132,6 +137,11 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
+            Expanded(
+                child: ListView(
+              children: publications,
+              shrinkWrap: true,
+            ))
           ],
         ),
       ),
