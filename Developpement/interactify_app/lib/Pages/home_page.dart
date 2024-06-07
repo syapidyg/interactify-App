@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                     else
                       Center(
                           child: Text(
-                              'No publications available')), // Show message if list is empty
+                              'No publications available')),
                   ],
                 ),
       bottomNavigationBar: NavBar(),

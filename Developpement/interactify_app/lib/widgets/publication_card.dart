@@ -4,6 +4,7 @@ import 'package:interactify_app/models/publication.dart';
 import 'package:interactify_app/models/commentaire.dart';
 import 'package:interactify_app/models/like.dart';
 import 'package:interactify_app/models/utilisateur.dart';
+import 'package:interactify_app/repository/publication_repository.dart';
 import 'package:interactify_app/services/publication_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:interactify_app/services/utilisateur_service.dart';
@@ -21,9 +22,12 @@ class _PublicationCardState extends State<PublicationCard> {
   bool isLiked = false;
   bool isExpanded = false;
   List<Commentaire> comments = [];
+  List<Like> likes = [];
   final PublicationService _PublicationService = PublicationService();
   final UtilisateurService utilisateurService = UtilisateurService();
+  final PublicationRepository _publicationRepository = PublicationRepository();
   Utilisateur? user;
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +36,13 @@ class _PublicationCardState extends State<PublicationCard> {
           (like) => like.utilisateurId == widget.publication.utilisateurId);
     }
     _loadComments();
+  }
+
+    void _loadLikes() async {
+    List<Like> allLikes = await _publicationRepository.getLikesByPublicationId(widget.publication.id!);
+    setState(() {
+      likes = allLikes;
+    });
   }
 
   void toggleLike() async {
@@ -80,7 +91,7 @@ class _PublicationCardState extends State<PublicationCard> {
         utilisateurId: widget.publication.utilisateurId,
         publicationId: widget.publication.id!);
     await _PublicationService.addComment(widget.publication.id!, newComment);
-    _loadComments(); // Reload comments to display the new one
+    _loadComments(); 
   }
 
   void toggleExpansion() {
@@ -270,6 +281,7 @@ class _PublicationCardState extends State<PublicationCard> {
                         showModalBottomSheet(
                           context: context,
                           builder: (context) => CommentSection(
+                            user: user!,
                             publication: widget.publication,
                             comments: comments,
                             addComment: _addComment,
@@ -294,11 +306,14 @@ class CommentSection extends StatelessWidget {
   final Publication publication;
   final List<Commentaire> comments;
   final Function(String) addComment;
+  final Utilisateur user; 
 
-  CommentSection(
-      {required this.publication,
-      required this.comments,
-      required this.addComment});
+  CommentSection({
+    required this.publication,
+    required this.comments,
+    required this.addComment,
+    required this.user, // Modifiez le constructeur
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -312,8 +327,18 @@ class CommentSection extends StatelessWidget {
             child: ListView.builder(
               itemCount: comments.length,
               itemBuilder: (context, index) {
+                Commentaire comment = comments[index];
                 return ListTile(
-                  title: Text(comments[index].text),
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(user.photoProfil!),
+                  ),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(user.username, style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(comment.text),
+                    ],
+                  ),
                 );
               },
             ),
